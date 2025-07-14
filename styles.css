@@ -100,7 +100,7 @@ h2, h3 {
 .grid-año {
   display: flex;
   flex-direction: row;
-  gap: 4px;
+  gap: 6px;
   overflow-x: auto;
 }
 
@@ -108,17 +108,17 @@ h2, h3 {
 .semestre {
   background-color: #ffe5f0;
   border-radius: 10px;
-  padding: 8px;
+  padding: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  min-width: 120px;
-  max-width: 125px;
+  min-width: 130px;
   flex-shrink: 0;
+  max-width: 150px;
 }
 
 .semestre h3 {
   margin-top: 0;
   color: #d60073;
-  font-size: 0.95em;
+  font-size: 1em;
   white-space: nowrap;
 }
 
@@ -139,17 +139,23 @@ h2, h3 {
   position: relative;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
-  width: 100px;
-  font-size: 0.68em;
+  width: 110px;
+  font-size: 0.65em;
   text-align: center;
   white-space: normal;
   line-height: 1.2em;
   word-break: break-word;
 }
 
+/* === Ajuste para 6to y 7mo año === */
+.año:nth-child(n+6) .asignatura {
+  width: 120px;
+  font-size: 0.62em;
+}
+
 .asignatura h4 {
   margin: 0;
-  font-size: 0.95em;
+  font-size: 1em;
   white-space: normal;
   line-height: 1.2em;
   word-break: break-word;
@@ -157,7 +163,7 @@ h2, h3 {
 
 .asignatura small {
   display: block;
-  font-size: 0.7em;
+  font-size: 0.75em;
   color: #888;
   margin-top: 2px;
 }
@@ -189,16 +195,16 @@ h2, h3 {
 /* === Input nota === */
 .nota {
   width: 100%;
-  padding: 5px;
+  padding: 6px;
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 0.85em;
+  font-size: 0.9em;
 }
 
 /* === Nota mostrada === */
 .nota-mostrada {
-  font-size: 0.7em;
+  font-size: 0.75em;
   color: #4a002e;
   margin-top: 4px;
 }
@@ -224,18 +230,21 @@ h2, h3 {
   display: block;
 }
 
-/* === Medicina Interna (más ancha, no más alta) === */
+/* === Medicina Interna (centrada entre semestres 5 y 6) === */
 .asignatura.med-interna {
-  width: 200px !important;
+  width: 230px !important;
   min-height: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* === Internados y otros ramos largos === */
+/* === Internados en dos líneas, no tan anchos === */
 .asignatura.internado {
-  width: 105px !important;
+  width: 120px !important;
   font-size: 0.65em;
-  word-break: break-word;
   white-space: normal;
+  word-break: break-word;
+  line-height: 1.2em;
 }
 
 /* === Footer === */
