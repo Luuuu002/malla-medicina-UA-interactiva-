@@ -1,7 +1,6 @@
-let asignaturas = []; 
+let asignaturas = [];
 let estados = {};
 
-// Cargar datos desde data.json
 fetch('data.json')
   .then(res => res.json())
   .then(data => {
@@ -10,7 +9,6 @@ fetch('data.json')
     renderMalla();
   });
 
-// Cargar estados guardados (completado y nota)
 function cargarEstadosGuardados() {
   const guardado = localStorage.getItem("estadoMalla");
   if (guardado) {
@@ -20,13 +18,11 @@ function cargarEstadosGuardados() {
   }
 }
 
-// Guardar estado actual
 function guardarEstado() {
   localStorage.setItem("estadoMalla", JSON.stringify(estados));
   actualizarAvance();
 }
 
-// Renderizar malla por semestres y mostrar años
 function renderMalla() {
   const container = document.getElementById("malla-container");
   container.innerHTML = "";
@@ -38,24 +34,27 @@ function renderMalla() {
     semestres[a.semestre].push(a);
   });
 
-  // Agrupar semestres por año (incluye agrupación especial para internado)
+  // Agrupar semestres por año
   const años = {};
   Object.keys(semestres).forEach(sem => {
     let año;
-    if (sem == 11 || sem == 12) {
-      año = "6 (Internado I)";
-    } else if (sem == 13 || sem == 14) {
-      año = "7 (Internado II)";
+    const semestreNum = Number(sem);
+    if (semestreNum === 11 || semestreNum === 12) {
+      año = 6;
+    } else if (semestreNum === 13 || semestreNum === 14) {
+      año = 7;
     } else {
-      año = Math.ceil(sem / 2);
+      año = Math.ceil(semestreNum / 2);
     }
 
     if (!años[año]) años[año] = [];
-    años[año].push({ semestre: sem, asignaturas: semestres[sem] });
+    años[año].push({ semestre: semestreNum, asignaturas: semestres[sem] });
   });
 
-  // Renderizar años y sus semestres
-  Object.keys(años).forEach(año => {
+  // Ordenar años numéricamente
+  const añosOrdenados = Object.keys(años).map(Number).sort((a,b) => a-b);
+
+  añosOrdenados.forEach(año => {
     const divAño = document.createElement("div");
     divAño.className = "año";
     divAño.innerHTML = `<h2>AÑO ${año}</h2>`;
@@ -63,7 +62,10 @@ function renderMalla() {
     const gridAño = document.createElement("div");
     gridAño.className = "grid-año";
 
-    años[año].forEach(grupo => {
+    // Ordenar semestres dentro del año
+    const semestresOrdenados = años[año].sort((a,b) => a.semestre - b.semestre);
+
+    semestresOrdenados.forEach(grupo => {
       const divSemestre = document.createElement("div");
       divSemestre.className = "semestre";
       divSemestre.innerHTML = `<h3>Semestre ${grupo.semestre}</h3>`;
@@ -91,50 +93,57 @@ function renderMalla() {
           <h4>${a.nombre}</h4>
           <small>${a.area}</small>
           ${completado && estados[a.id]?.nota 
-            ? `<p class="nota-mostrada">Nota: <strong>${estados[a.id].nota}</strong></p>` 
+            ? `<p class="nota-mostrada">${estados[a.id].nota}</p>` 
             : ''
           }
-          ${!completado ? 
-            `<input class="nota" type="text" placeholder="Ingresa tu nota" value="${estados[a.id]?.nota || ''}">`
-            : ''
-          }
+          <input class="nota" type="text" placeholder="Ingresa tu nota" value="${estados[a.id]?.nota || ''}">
+          <button class="boton-nota" title="Editar nota">✎</button>
         `;
 
-        // Evento para marcar como completado
-        if (!bloqueado && !completado) {
-          div.style.cursor = "pointer";
-          div.onclick = (e) => {
-            if (e.target.classList.contains("nota")) return;
-
-            const notaInput = div.querySelector('.nota');
-            const nota = notaInput ? notaInput.value.trim() : "";
-
-            if (!nota) {
-              alert("Debes ingresar una nota antes de marcar como completado.");
-              return;
-            }
-
-            estados[a.id].nota = nota;
-            estados[a.id].completado = true;
-            guardarEstado();
-            renderMalla();
-          };
+        // Mostrar input nota solo si no está completado
+        if (completado) {
+          div.querySelector('.nota').style.display = "none";
+          div.querySelector('.boton-nota').style.display = "none";
         } else {
-          div.onclick = null;
+          div.querySelector('.nota').style.display = "none";
         }
 
-        // Guardar nota automáticamente al escribirla
-        if (!completado) {
-          setTimeout(() => {
-            const input = div.querySelector('.nota');
-            if (input) {
-              input.onchange = (ev) => {
-                estados[a.id].nota = ev.target.value;
-                guardarEstado();
-              };
-            }
-          }, 0);
-        }
+        // Toggle input nota al tocar esquina inferior derecha (botón invisible)
+        const botonNota = div.querySelector('.boton-nota');
+        const inputNota = div.querySelector('.nota');
+
+        botonNota.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (inputNota.style.display === "block") {
+            inputNota.style.display = "none";
+          } else {
+            inputNota.style.display = "block";
+            inputNota.focus();
+          }
+        });
+
+        // Al hacer click en la asignatura (excepto en input), marcar completado si nota ingresada
+        div.addEventListener('click', (e) => {
+          if (e.target === inputNota || e.target === botonNota) return;
+          if (bloqueado || completado) return;
+
+          const nota = inputNota.value.trim();
+          if (!nota) {
+            alert("Debes ingresar una nota antes de marcar como completado.");
+            return;
+          }
+
+          estados[a.id].nota = nota;
+          estados[a.id].completado = true;
+          guardarEstado();
+          renderMalla();
+        });
+
+        // Guardar nota automáticamente al cambiar input
+        inputNota.addEventListener('change', (e) => {
+          estados[a.id].nota = e.target.value;
+          guardarEstado();
+        });
 
         grid.appendChild(div);
       });
@@ -150,7 +159,6 @@ function renderMalla() {
   actualizarAvance();
 }
 
-// Verificar si tiene prerrequisitos no completados
 function tienePrerrequisitoNoCompletado(asignatura) {
   if (!asignatura.prerrequisito) return false;
 
@@ -161,7 +169,6 @@ function tienePrerrequisitoNoCompletado(asignatura) {
   return asignatura.prerrequisito.some(id => !estados[id]?.completado);
 }
 
-// Actualizar porcentaje de avance
 function actualizarAvance() {
   const total = asignaturas.length;
   const completados = asignaturas.filter(a => estados[a.id]?.completado).length;
@@ -171,7 +178,6 @@ function actualizarAvance() {
   document.getElementById("porcentaje").innerText = `${porcentaje}%`;
 }
 
-// Resetear toda la malla
 function resetearMalla() {
   if (confirm("¿Estás segura que quieres resetear toda la malla?")) {
     asignaturas.forEach(a => estados[a.id] = { completado: false, nota: "" });
