@@ -1,15 +1,15 @@
 /* === Estilos generales === */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #fff0f7; /* Rosado muy suave */
-  color: #4a002e; /* Morado oscuro para texto principal */
+  background-color: #fff0f7;
+  color: #4a002e;
   padding: 20px;
   margin: 0;
 }
 
 h1 {
   text-align: center;
-  color: #ff66a3; /* Rosado vibrante */
+  color: #ff66a3;
   margin-bottom: 10px;
 }
 
@@ -17,11 +17,17 @@ h2, h3 {
   color: #cc0052;
 }
 
-/* === Porcentaje de avance === */
+/* === Porcentaje de avance centrado === */
+#avance {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
 #avance h2 {
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   color: #cc0052;
   font-weight: bold;
   font-size: 1.4em;
@@ -34,24 +40,19 @@ h2, h3 {
   color: inherit;
 }
 
-/* === Barra de progreso de avance === */
-#avance {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
+/* === Barra de progreso === */
 .barra {
   width: 80%;
-  margin: 10px auto;
+  margin: 0 auto;
   height: 20px;
-  background-color: #ffb3d9; /* Rosado claro */
+  background-color: #ffb3d9;
   border-radius: 10px;
   overflow: hidden;
 }
 
 .progreso {
   height: 100%;
-  background-color: #ff66a3; /* Rosado fuerte */
+  background-color: #ff66a3;
   width: 0%;
   transition: width 0.4s ease-in-out;
 }
@@ -75,23 +76,15 @@ h2, h3 {
   background-color: #e05590;
 }
 
-/* === Contenedor de la malla === */
+/* === Contenedor de malla === */
 #malla-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding-bottom: 20px;
-}
-
-/* === Distribución horizontal de semestres por año === */
-.grid-año {
-  display: flex;
-  gap: 1mm; /* 1mm entre semestres del mismo año */
-  flex-wrap: nowrap;
 }
 
 /* === Año académico === */
 .año {
-  margin-bottom: 20px; /* 2mm entre años distintos */
+  margin-bottom: 20px; /* 2mm entre años */
 }
 
 .año > h2 {
@@ -101,6 +94,14 @@ h2, h3 {
   font-size: 1.4em;
   text-align: left;
   padding-left: 8px;
+}
+
+/* === Grid horizontal de semestres por año === */
+.grid-año {
+  display: flex;
+  gap: 1mm; /* 1mm entre semestres del mismo año */
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 
 /* === Semestre === */
@@ -141,7 +142,7 @@ h2, h3 {
 
 .asignatura h4 {
   margin: 0 0 5px 0;
-  font-size: 0.9em; /* más pequeño */
+  font-size: 0.9em;
 }
 
 .asignatura small {
@@ -151,9 +152,9 @@ h2, h3 {
   margin-bottom: 8px;
 }
 
-/* === Estados de las asignaturas === */
+/* === Estados === */
 .asignatura.completado {
-  background-color: #ff66a3; /* igual al color de la barra de progreso */
+  background-color: #ff66a3;
   text-decoration: none;
   opacity: 0.6;
   cursor: default;
@@ -165,7 +166,7 @@ h2, h3 {
 }
 
 .asignatura.cursando {
-  background-color: #ffb3d9; /* igual al fondo de la barra */
+  background-color: #ffb3d9;
 }
 
 .asignatura.bloqueado {
@@ -175,7 +176,7 @@ h2, h3 {
   cursor: not-allowed;
 }
 
-/* === Input de nota === */
+/* === Input nota === */
 .nota {
   width: 100%;
   padding: 6px;
@@ -192,31 +193,31 @@ h2, h3 {
   margin-top: 8px;
 }
 
-/* === Botón de nota oculto y funcional === */
+/* === Botón invisible de nota === */
 .nota-button {
   position: absolute;
   bottom: 6px;
   right: 6px;
   width: 16px;
   height: 16px;
-  background-color: #ff66a3;
-  border-radius: 50%;
+  background-color: transparent;
   cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
+  border-radius: 50%;
 }
 
-.asignatura:hover .nota-button {
-  opacity: 1;
-}
-
-/* === Mostrar u ocultar sección de nota === */
-.asignatura .nota-section {
+/* === Mostrar/ocultar sección nota === */
+.nota-section {
   display: none;
 }
 
 .asignatura.mostrar-nota .nota-section {
   display: block;
+}
+
+/* === Medicina Interna (doble ancho) === */
+.asignatura.med-interna {
+  grid-column: span 2;
+  width: 296px !important;
 }
 
 /* === Footer === */
