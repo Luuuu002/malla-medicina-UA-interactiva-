@@ -1,4 +1,4 @@
-let asignaturas = [];
+let asignaturas = []; 
 let estados = {};
 
 // Cargar datos desde data.json
@@ -10,7 +10,7 @@ fetch('data.json')
     renderMalla();
   });
 
-// Cargar estados guardados (completado y nota)
+// Cargar estados guardados
 function cargarEstadosGuardados() {
   const guardado = localStorage.getItem("estadoMalla");
   if (guardado) {
@@ -26,37 +26,39 @@ function guardarEstado() {
   actualizarAvance();
 }
 
-// Renderizar malla por semestres y mostrar años
+// Renderizar malla
 function renderMalla() {
   const container = document.getElementById("malla-container");
   container.innerHTML = "";
 
-  // Agrupar por semestre (con agrupación especial 11-12 y 13-14)
   const semestres = {};
   asignaturas.forEach(a => {
-    let sem = a.semestre;
-    // Agrupar 11 y 12 juntos
-    if (sem == 11 || sem == 12) sem = '11 y 12';
-    // Agrupar 13 y 14 juntos
-    if (sem == 13 || sem == 14) sem = '13 y 14';
-
-    if (!semestres[sem]) semestres[sem] = [];
-    semestres[sem].push(a);
+    if (!semestres[a.semestre]) semestres[a.semestre] = [];
+    semestres[a.semestre].push(a);
   });
 
-  // Agrupar semestres en años (1-2 = año 1, 3-4 = año 2, ..., con semestres 11 y 12 juntos y 13 y 14 juntos)
+  // Agrupaciones especiales para años
+  const agrupaciones = {
+    "6": ["11", "12"],
+    "7": ["13", "14"]
+  };
+
   const años = {};
-  Object.keys(semestres).forEach(semKey => {
-    let año;
-    if (semKey === '11 y 12') año = 6;
-    else if (semKey === '13 y 14') año = 7;
-    else año = Math.ceil(parseInt(semKey) / 2);
+
+  Object.keys(semestres).forEach(sem => {
+    let año = Math.ceil(sem / 2);
+
+    for (const a in agrupaciones) {
+      if (agrupaciones[a].includes(sem)) {
+        año = parseInt(a);
+      }
+    }
 
     if (!años[año]) años[año] = [];
-    años[año].push({ semestre: semKey, asignaturas: semestres[semKey] });
+    años[año].push({ semestre: sem, asignaturas: semestres[sem] });
   });
 
-  Object.keys(años).sort((a,b)=>a-b).forEach(año => {
+  Object.keys(años).forEach(año => {
     const divAño = document.createElement("div");
     divAño.className = "año";
     divAño.innerHTML = `<h2>AÑO ${año}</h2>`;
@@ -67,7 +69,16 @@ function renderMalla() {
     años[año].forEach(grupo => {
       const divSemestre = document.createElement("div");
       divSemestre.className = "semestre";
-      divSemestre.innerHTML = `<h3>Semestre ${grupo.semestre}</h3>`;
+
+      const grupoKey = (grupo.semestre === "11" || grupo.semestre === "12") ? "11-12"
+                      : (grupo.semestre === "13" || grupo.semestre === "14") ? "13-14"
+                      : null;
+
+      if (grupoKey) {
+        divSemestre.setAttribute("data-grupo", grupoKey);
+      }
+
+      divSemestre.innerHTML += `<h3>Semestre ${grupo.semestre}</h3>`;
 
       const grid = document.createElement("div");
       grid.className = "grid-asignaturas";
@@ -75,85 +86,56 @@ function renderMalla() {
       grupo.asignaturas.forEach(a => {
         const bloqueado = tienePrerrequisitoNoCompletado(a);
         const completado = !!estados[a.id]?.completado;
-        const cursando = esRamoCursando(a);
+        const nota = estados[a.id]?.nota || "";
+
+        let estadoClase = '';
+        if (completado) estadoClase = 'completado';
+        else if (!bloqueado && !completado) estadoClase = 'cursando';
+        else if (bloqueado) estadoClase = 'bloqueado';
 
         const div = document.createElement("div");
-        div.className = "asignatura";
-
-        // No tachar Formación Básica y Profesional, se les pone clase 'formacion'
-        if (a.area.toLowerCase().includes("formación básica") || a.area.toLowerCase().includes("formación profesional")) {
-          div.classList.add("formacion");
-        }
-
-        if (completado) div.classList.add("completado");
-        else if (cursando) div.classList.add("cursando");
-        else if (bloqueado) div.classList.add("bloqueado");
-        else div.classList.add("disponible");
-
+        div.className = `asignatura ${estadoClase}`;
         div.innerHTML = `
           <h4>${a.nombre}</h4>
           <small>${a.area}</small>
-          ${completado && estados[a.id]?.nota
-            ? `<p class="nota-mostrada">${estados[a.id].nota}</p>`
-            : ''
-          }
-          <div class="zona-nota"></div>
-          <button>Nota</button>
-          <input class="nota" type="text" placeholder="Ingresa tu nota" value="${estados[a.id]?.nota || ''}">
+          ${completado ? `<div class="nota-mostrada">${nota}</div>` : ''}
+          <button class="boton-nota" title="Ingresar nota">✏️</button>
+          <input class="nota" type="text" placeholder="Ingresa tu nota" value="${nota}" style="display: none;">
         `;
 
-        // Ocultar nota y botón al inicio
         const inputNota = div.querySelector(".nota");
-        const botonNota = div.querySelector("button");
-        inputNota.style.display = "none";
-        botonNota.style.display = "none";
+        const btnNota = div.querySelector(".boton-nota");
 
-        // Click en asignatura para tachar (completar)
-        div.onclick = (e) => {
-          if (e.target === botonNota || e.target === inputNota || e.target.classList.contains('zona-nota')) return;
-
-          if (bloqueado) return; // No hace nada si está bloqueado
-
-          if (completado) return; // No permite destachar
-
-          if (!estados[a.id].nota.trim()) {
-            alert("Debes ingresar una nota para completar el ramo.");
-            return;
-          }
-
-          estados[a.id].completado = true;
-          guardarEstado();
-          renderMalla();
-        };
-
-        // Mostrar/ocultar botón nota al clicar zona-nota (esquina inferior derecha)
+        // Mostrar input de nota al hacer clic en el botón
         if (!completado && !bloqueado) {
-          const zonaNota = div.querySelector(".zona-nota");
-          zonaNota.onclick = (ev) => {
-            ev.stopPropagation();
-            if (inputNota.style.display === "none") {
-              inputNota.style.display = "block";
-              botonNota.style.display = "block";
-              inputNota.focus();
-            } else {
-              inputNota.style.display = "none";
-              botonNota.style.display = "none";
-            }
+          btnNota.onclick = (e) => {
+            e.stopPropagation();
+            inputNota.style.display = "block";
+            inputNota.focus();
           };
 
-          botonNota.onclick = (ev) => {
-            ev.stopPropagation();
-            const val = inputNota.value.trim();
-            if (val === "") {
-              alert("Ingrese una nota antes de guardar.");
+          inputNota.onchange = () => {
+            estados[a.id].nota = inputNota.value.trim();
+            guardarEstado();
+          };
+
+          div.onclick = (e) => {
+            // Evitar marcar como completado si se hizo clic en el input o botón
+            if (e.target.classList.contains("nota") || e.target.classList.contains("boton-nota")) return;
+
+            const notaIngresada = inputNota.value.trim();
+            if (!notaIngresada) {
+              alert("Debes ingresar una nota antes de marcar como completado.");
               return;
             }
-            estados[a.id].nota = val;
+
+            estados[a.id].nota = notaIngresada;
+            estados[a.id].completado = true;
             guardarEstado();
-            alert("Nota guardada.");
-            inputNota.style.display = "none";
-            botonNota.style.display = "none";
+            renderMalla();
           };
+        } else {
+          div.onclick = null;
         }
 
         grid.appendChild(div);
@@ -170,7 +152,7 @@ function renderMalla() {
   actualizarAvance();
 }
 
-// Verificar prerrequisitos
+// Verifica si hay prerrequisitos no cumplidos
 function tienePrerrequisitoNoCompletado(asignatura) {
   if (!asignatura.prerrequisito) return false;
 
@@ -181,14 +163,7 @@ function tienePrerrequisitoNoCompletado(asignatura) {
   return asignatura.prerrequisito.some(id => !estados[id]?.completado);
 }
 
-// Detectar ramo cursando (primer desbloqueado y no completado)
-function esRamoCursando(asignatura) {
-  if (estados[asignatura.id]?.completado) return false;
-  if (tienePrerrequisitoNoCompletado(asignatura)) return false;
-  return true;
-}
-
-// Actualizar porcentaje de avance
+// Actualiza barra de progreso
 function actualizarAvance() {
   const total = asignaturas.length;
   const completados = asignaturas.filter(a => estados[a.id]?.completado).length;
