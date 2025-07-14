@@ -1,235 +1,133 @@
-/* === Estilos generales === */
+/* Estilos Generales */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #fff0f7;
-  color: #4a002e;
-  padding: 20px;
-  margin: 0;
+    background-color: #f5f5f5; /* Fondo suave para toda la página */
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
 }
 
+/* Contenedor principal */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar todo el contenido horizontalmente */
+    padding: 20px;
+}
+
+/* Encabezado */
 h1 {
-  text-align: center;
-  color: #ff66a3;
-  margin-bottom: 10px;
+    font-size: 36px;
+    color: #004d40; /* Color para el encabezado */
+    margin-bottom: 20px;
 }
 
-h2, h3 {
-  color: #cc0052;
-}
-
-/* === Porcentaje de avance centrado === */
-#avance {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-#avance h2 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  color: #cc0052;
-  font-weight: bold;
-  font-size: 1.4em;
-  margin-bottom: 10px;
-}
-
-#porcentaje {
-  font-size: inherit;
-  font-weight: inherit;
-  color: inherit;
-}
-
-/* === Barra de progreso === */
-.barra {
-  width: 80%;
-  margin: 0 auto;
-  height: 20px;
-  background-color: #ffb3d9;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.progreso {
-  height: 100%;
-  background-color: #ff66a3;
-  width: 0%;
-  transition: width 0.4s ease-in-out;
-}
-
-/* === Botón Reset === */
-#reset-btn {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background-color: #ff66a3;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  font-size: 1em;
-  cursor: pointer;
-  border-radius: 5px;
-  z-index: 999;
-}
-
-#reset-btn:hover {
-  background-color: #e05590;
-}
-
-/* === Contenedor de malla === */
-#malla-container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* === Año académico === */
-.año {
-  margin-bottom: 20px;
-}
-
-.año > h2 {
-  margin-bottom: 10px;
-  color: #cc0052;
-  font-weight: bold;
-  font-size: 1.4em;
-  text-align: left;
-  padding-left: 8px;
-}
-
-/* === Grid horizontal de semestres por año === */
-.grid-año {
-  display: flex;
-  gap: 1mm;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-}
-
-/* === Semestre === */
+/* Estilo para los semestres */
 .semestre {
-  background-color: #ffe5f0;
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  margin-bottom: 0;
-  min-width: 150px;
-  flex-shrink: 0;
+    display: flex;
+    flex-direction: column; /* Mantenemos la columna para lista de ramos */
+    align-items: center; /* Aseguramos que los ramos estén centrados */
+    width: 100%;
+    margin-bottom: 20px;
 }
 
-.semestre h3 {
-  margin-top: 0;
-  color: #d60073;
+.semestre-5 {
+    background-color: #b2dfdb; /* Color de fondo para semestre 5 */
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    margin: 10px 0;
 }
 
-/* === Grid de asignaturas === */
-.grid-asignaturas {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 144px);
-  gap: 0.1mm;
+.semestre-6 {
+    background-color: #80cbc4; /* Color de fondo para semestre 6 */
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    margin: 10px 0;
 }
 
-/* === Asignaturas === */
-.asignatura {
-  background-color: #ffffff;
-  border: 1px solid #ffcccc;
-  padding: 12px;
-  border-radius: 8px;
-  position: relative;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
-  width: 144px;
-  margin: 0.1mm;
+/* Estilo para los ramos */
+.ramo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff; /* Fondo blanco para los ramos */
+    border-radius: 8px;
+    padding: 5px 10px;
+    margin: 5px 0;
+    font-size: 12px; /* Tamaño reducido de texto */
+    text-align: center;
+    width: 90%; /* Ajuste de ancho */
+    box-sizing: border-box;
+    transition: background-color 0.3s ease; /* Transición suave para hover */
 }
 
-.asignatura h4 {
-  margin: 0 0 5px 0;
-  font-size: 0.85em; /* Más pequeño */
+/* Color de los ramos por semestre */
+.ramo.semestre-5 {
+    background-color: #004d40; /* Color de fondo para ramos del semestre 5 */
+    color: white; /* Texto blanco */
 }
 
-.asignatura small {
-  display: block;
-  font-size: 0.75em; /* Más pequeño */
-  color: #888;
-  margin-bottom: 8px;
+.ramo.semestre-6 {
+    background-color: #00796b; /* Color de fondo para ramos del semestre 6 */
+    color: white; /* Texto blanco */
 }
 
-/* === Estados === */
-.asignatura.completado {
-  background-color: #ff66a3;
-  text-decoration: none;
-  opacity: 0.6;
-  cursor: default;
+.ramo.medicina-interna {
+    font-size: 14px; /* Hacer más grande la fuente */
+    font-weight: bold; /* Destacar medicina interna */
+    background-color: #004d40; /* Usar el mismo color que semestre 5 */
+    color: white;
+    width: 90%; /* Ancho de 90% para mantener uniformidad */
+    grid-column: span 2; /* Medicina Interna ocupa dos semestres */
+    padding: 10px 10px; /* Un poco más de espacio dentro del cuadro */
 }
 
-.asignatura.completado h4 {
-  text-decoration: line-through;
-  background-color: transparent;
+/* Efecto hover para los ramos */
+.ramo:hover {
+    background-color: #00796b; /* Cambio de color cuando pasa el ratón */
+    cursor: pointer;
 }
 
-.asignatura.cursando {
-  background-color: #ffb3d9;
+/* Ajustes para los semestres */
+.semestre-5 .ramo,
+.semestre-6 .ramo {
+    width: 90%; /* Asegura que todos los ramos tengan el mismo tamaño */
+    margin: 5px 0;
 }
 
-.asignatura.bloqueado {
-  background-color: #fafafa;
-  border-color: #ddd;
-  opacity: 0.5;
-  cursor: not-allowed;
+/* Semestre en formato lista */
+.semestre-5 {
+    display: flex;
+    flex-direction: column; /* Lista vertical para semestre 5 */
+    gap: 10px; /* Espaciado entre los ramos */
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    width: 90%; /* Contenedor más pequeño para que todo se centre */
+    box-sizing: border-box;
 }
 
-/* === Input nota === */
-.nota {
-  width: 100%;
-  padding: 6px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 0.9em;
+.semestre-6 {
+    display: flex;
+    flex-direction: column; /* Colocar los ramos de forma vertical */
+    gap: 10px;
+    width: 90%; /* Contenedor más pequeño para que todo se centre */
 }
 
-/* === Nota mostrada === */
-.nota-mostrada {
-  font-size: 0.9em;
-  color: #4a002e;
-  margin-top: 8px;
-}
+/* Responsividad */
+@media (max-width: 768px) {
+    .ramo {
+        font-size: 10px; /* Reducir tamaño de texto en pantallas pequeñas */
+        padding: 5px;
+    }
 
-/* === Botón invisible de nota === */
-.nota-button {
-  position: absolute;
-  bottom: 6px;
-  right: 6px;
-  width: 16px;
-  height: 16px;
-  background-color: transparent;
-  cursor: pointer;
-  border-radius: 50%;
-}
+    .semestre {
+        padding: 5px;
+    }
 
-/* === Mostrar/ocultar sección nota === */
-.nota-section {
-  display: none;
-}
-
-.asignatura.mostrar-nota .nota-section {
-  display: block;
-}
-
-/* === Medicina Interna (doble ancho) === */
-.asignatura.med-interna {
-  grid-column: span 2;
-  width: 296px !important;
-}
-
-/* === Footer === */
-#footer {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 0.9em;
-  color: #888;
-}
-
-#footer h3 {
-  margin: 0;
-  font-size: 1.2em;
-  color: #ff66a3;
+    .container {
+        padding: 10px;
+    }
 }
