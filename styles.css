@@ -5,7 +5,6 @@ body {
   color: #4a002e; /* Morado oscuro para texto principal */
   padding: 20px;
   margin: 0;
-  position: relative;
 }
 
 h1 {
@@ -16,25 +15,6 @@ h1 {
 
 h2, h3 {
   color: #cc0052;
-}
-
-/* === Botón de Resetear Malla === */
-#reset-btn {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background-color: #ff66a3;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  font-size: 1em;
-  cursor: pointer;
-  border-radius: 5px;
-  z-index: 999;
-}
-
-#reset-btn:hover {
-  background-color: #e05590;
 }
 
 /* === Barra de progreso de avance === */
@@ -81,19 +61,46 @@ button:hover {
   background-color: #e05590;
 }
 
-/* === Contenedor de semestres y asignaturas === */
+/* === Botón Reset === */
+#reset-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #ff66a3;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+  z-index: 999;
+}
+
+#reset-btn:hover {
+  background-color: #e05590;
+}
+
+/* === Contenedor de malla === */
 #malla-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding-top: 60px; /* Para dejar espacio al botón de reset */
 }
 
+/* === Distribución horizontal de semestres por año === */
+.grid-año {
+  display: flex;
+  gap: 0.2mm; /* Separación entre semestres de años distintos */
+}
+
+/* === Año académico === */
 .año {
-  margin-bottom: 2mm; /* Separación de 2mm entre años */
+  margin-bottom: 20px;
+  margin-top: 2mm;
 }
 
+/* === Semestre === */
 .semestre {
-  margin-bottom: 2mm; /* Separación de 2mm entre semestres */
+  margin-bottom: 0;
   background-color: #ffe5f0;
   border-radius: 10px;
   padding: 15px;
@@ -105,12 +112,14 @@ button:hover {
   color: #d60073;
 }
 
+/* === Grid de asignaturas === */
 .grid-asignaturas {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
-  gap: 1mm; /* Separación entre ramos: 1mm */
+  grid-template-columns: repeat(auto-fill, 149px);
+  gap: 0.1mm; /* Separación entre ramos */
 }
 
+/* === Asignaturas === */
 .asignatura {
   background-color: #ffffff;
   border: 1px solid #ffcccc;
@@ -119,13 +128,8 @@ button:hover {
   position: relative;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
-  width: 155px; /* Ancho fijo */
-  cursor: pointer;
-}
-
-.asignatura.completado h4 {
-  text-decoration: line-through;
-  color: #888;
+  width: 149px;
+  margin: 0.1mm;
 }
 
 .asignatura h4 {
@@ -140,6 +144,30 @@ button:hover {
   margin-bottom: 8px;
 }
 
+/* === Estados de las asignaturas === */
+.asignatura.completado {
+  background-color: #ffd6ec;
+  text-decoration: none;
+  opacity: 0.6;
+  cursor: default;
+}
+
+.asignatura.completado h4 {
+  text-decoration: line-through;
+}
+
+.asignatura.cursando {
+  background-color: #ffb3d9;
+}
+
+.asignatura.bloqueado {
+  background-color: #fafafa;
+  border-color: #ddd;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* === Input de nota === */
 .nota {
   width: 100%;
   padding: 6px;
@@ -149,31 +177,31 @@ button:hover {
   font-size: 0.9em;
 }
 
-.numero-contextual {
-  display: none;
-  position: absolute;
-  bottom: -20px;
-  right: 0;
+/* === Nota mostrada === */
+.nota-mostrada {
   font-size: 0.9em;
-  color: #cc0052;
+  color: #4a002e;
+  margin-top: 8px;
 }
 
-/* === Estilo de la malla vertical para semestres 11-12 y 13-14 === */
-.grid-año {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
+/* === Botón adicional de nota (no usado por ahora) === */
+.nota-button-visible {
+  width: 100%;
+  font-size: 0.9em;
+  background-color: #ff66a3;
+  color: white;
+  padding: 8px;
+  margin-top: 10px;
+  border-radius: 5px;
+  display: none;
+  cursor: pointer;
 }
 
-.grid-año.vertical {
-  flex-direction: column;
+.nota-button-visible:hover {
+  background-color: #e05590;
 }
 
-.grid-año.vertical .semestre {
-  flex-direction: column;
-}
-
-/* === Estilos adicionales para resetear === */
+/* === Footer === */
 #footer {
   text-align: center;
   margin-top: 20px;
@@ -185,4 +213,9 @@ button:hover {
   margin: 0;
   font-size: 1.2em;
   color: #ff66a3;
+}
+
+/* === Vista alternativa vertical (por si se necesitara más adelante) === */
+.grid-año.vertical .semestre {
+  flex-direction: column;
 }
