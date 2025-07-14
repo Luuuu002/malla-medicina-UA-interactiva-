@@ -5,17 +5,21 @@ body {
   color: #4a002e; /* Morado oscuro para texto principal */
   padding: 20px;
   margin: 0;
-  overflow-x: hidden; /* Evitar scroll horizontal */
+  overflow-x: hidden; /* Sin scroll horizontal */
 }
 
 h1 {
   text-align: center;
-  color: #ff66a3; /* Rosado vibrante */
-  margin-bottom: 10px;
+  color: #ff66a3; /* Rosado vibrante (fucsia claro) */
+  margin-bottom: 5px;
 }
 
-h2, h3 {
+.creador {
+  text-align: center;
+  font-size: 0.85em;
   color: #cc0052;
+  margin-top: 0;
+  margin-bottom: 20px;
 }
 
 /* === Barra de progreso de avance === */
@@ -28,14 +32,14 @@ h2, h3 {
   width: 80%;
   margin: 10px auto;
   height: 20px;
-  background-color: #d47ca0; /* barra vacía: rosado oscuro pero más claro que llenado */
+  background-color: #ff99c1; /* Barra vacía: rosado fucsia claro */
   border-radius: 10px;
   overflow: hidden;
 }
 
 .progreso {
   height: 100%;
-  background-color: #ff66a3; /* barra llena: rosado vibrante */
+  background-color: #b30059; /* Barra llena: fucsia oscuro (más oscuro que barra vacía) */
   width: 0%;
   transition: width 0.4s ease-in-out;
 }
@@ -68,9 +72,9 @@ button:hover {
   margin: 0 auto;
   display: flex;
   flex-wrap: nowrap;
-  overflow-x: auto; /* permitir scroll horizontal si hace falta */
   justify-content: center;
-  gap: 20px;
+  gap: 15px;
+  overflow-x: hidden; /* Sin scroll horizontal */
 }
 
 /* Años en fila horizontal */
@@ -83,45 +87,48 @@ button:hover {
   flex-direction: column;
   max-height: 90vh;
   overflow-y: auto;
-  min-width: 250px;
+  min-width: 260px;
 }
 
 .año h2 {
   margin-top: 0;
   color: #cc0052;
   text-align: center;
+  font-weight: 600;
+  font-size: 1.3em;
 }
 
-/* Semestres en fila horizontal dentro de cada año */
+/* Semestres en columna vertical dentro de cada año */
 .grid-año {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 15px;
-  flex-wrap: nowrap;
 }
 
-/* Semestres verticales (uno debajo del otro) */
+/* Semestres verticales */
 .semestre {
   background-color: #fff0f7;
   border-radius: 10px;
   padding: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  min-width: 180px;
-  max-height: 80vh;
+  min-width: 220px;
+  max-height: 75vh;
   overflow-y: auto;
 }
 
 .semestre h3 {
   margin-top: 0;
-  color: #d60073;
+  color: #d60073; /* Color texto semestre */
   font-size: 1.1em;
+  font-weight: 600;
+  text-align: center;
 }
 
 /* Asignaturas en columna */
 .grid-asignaturas {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 /* Estilos para cada asignatura */
@@ -134,24 +141,29 @@ button:hover {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
   min-height: 70px;
-  cursor: default;
-}
-
-.asignatura.disponible {
   cursor: pointer;
-  background-color: #fff0f7;
+  color: #4a002e;
+  user-select: none;
 }
 
 .asignatura.completado {
-  background-color: #d47ca0; /* rosado oscuro (color barra vacía) */
+  background-color: #8e0044; /* rosado oscuro para completados */
   color: white;
+  text-decoration: line-through;
+}
+
+.asignatura.cursando {
+  background-color: #ff99c1; /* rosado fucsia claro (color barra vacía) para ramo cursando */
+  color: #4a002e;
+  text-decoration: none;
 }
 
 .asignatura.bloqueado {
-  background-color: #fafafa;
-  border-color: #ddd;
-  opacity: 0.5;
+  background-color: #ffe5f0; /* rosado clarito */
+  border-color: #ffd1e5;
+  color: #888;
   cursor: not-allowed;
+  text-decoration: none;
 }
 
 .asignatura h4 {
@@ -168,15 +180,36 @@ button:hover {
   word-break: break-word;
 }
 
-/* Zona invisible para activar input nota en la esquina superior derecha */
+/* Zona para mostrar el botón de nota en esquina inferior derecha */
 .zona-nota {
   position: absolute;
-  top: 5px;
+  bottom: 5px;
   right: 5px;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   cursor: pointer;
-  /* Sin fondo para ser invisible */
+  background: transparent;
+}
+
+/* Botón para ingresar nota, oculto hasta clic */
+.asignatura button {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  padding: 4px 6px;
+  font-size: 0.8em;
+  border: none;
+  border-radius: 4px;
+  background-color: #ff66a3;
+  color: white;
+  cursor: pointer;
+  display: none;
+  user-select: none;
+  transition: background-color 0.3s ease;
+}
+
+.asignatura button:hover {
+  background-color: #cc0052;
 }
 
 /* Input nota oculto por defecto */
@@ -198,22 +231,4 @@ button:hover {
   color: #4a002e;
   margin-top: 6px;
   text-decoration: none;
-}
-.creador {
-  text-align: center;
-  font-size: 0.9em;
-  color: #cc0052;
-  margin-top: -10px;
-  margin-bottom: 20px;
-}
-
-.corazon {
-  animation: brillo 1.5s infinite alternate;
-  display: inline-block;
-  margin-left: 5px;
-}
-
-@keyframes brillo {
-  0% { filter: drop-shadow(0 0 2px #ff66a3); }
-  100% { filter: drop-shadow(0 0 6px #ff66a3); }
 }
