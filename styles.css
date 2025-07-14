@@ -5,7 +5,7 @@ body {
   color: #4a002e; /* Morado oscuro para texto principal */
   padding: 20px;
   margin: 0;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Evitar scroll horizontal */
 }
 
 h1 {
@@ -28,14 +28,14 @@ h2, h3 {
   width: 80%;
   margin: 10px auto;
   height: 20px;
-  background-color: #ffd6ec; /* Rosado claro (vacío) */
+  background-color: #d47ca0; /* barra vacía: rosado oscuro pero más claro que llenado */
   border-radius: 10px;
   overflow: hidden;
 }
 
 .progreso {
   height: 100%;
-  background-color: #ff66a3; /* Rosado fuerte (llenado) */
+  background-color: #ff66a3; /* barra llena: rosado vibrante */
   width: 0%;
   transition: width 0.4s ease-in-out;
 }
@@ -62,77 +62,91 @@ button:hover {
   background-color: #e05590;
 }
 
-/* === Malla container: años y semestres sin scroll horizontal === */
+/* === Contenedor años y semestres === */
 #malla-container {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto; /* permitir scroll horizontal si hace falta */
   justify-content: center;
   gap: 20px;
-  max-width: 100%;
 }
 
-/* Años como contenedores verticales */
+/* Años en fila horizontal */
 .año {
+  border: 1px solid #ffb3d9;
+  border-radius: 10px;
+  background-color: #ffe5f0;
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  background-color: #fff5fa;
-  border: 2px solid #ffb3d9;
-  border-radius: 15px;
-  padding: 10px;
-  flex: 1 1 350px;
+  max-height: 90vh;
+  overflow-y: auto;
+  min-width: 250px;
 }
 
-/* Semestres dispuestos horizontalmente */
+.año h2 {
+  margin-top: 0;
+  color: #cc0052;
+  text-align: center;
+}
+
+/* Semestres en fila horizontal dentro de cada año */
 .grid-año {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
+  gap: 15px;
+  flex-wrap: nowrap;
 }
 
-/* === Semestres === */
+/* Semestres verticales (uno debajo del otro) */
 .semestre {
-  background-color: #ffe5f0;
+  background-color: #fff0f7;
   border-radius: 10px;
-  padding: 15px;
-  min-width: 300px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  min-width: 180px;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .semestre h3 {
   margin-top: 0;
   color: #d60073;
-  text-align: center;
+  font-size: 1.1em;
 }
 
-/* === Asignaturas === */
+/* Asignaturas en columna */
 .grid-asignaturas {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-/* === Estilo base === */
+/* Estilos para cada asignatura */
 .asignatura {
   background-color: #ffffff;
-  border: 1px solid #ffcccc;
-  padding: 12px;
+  border: 1px solid #ffb3d9;
+  padding: 10px;
   border-radius: 8px;
   position: relative;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
+  min-height: 70px;
+  cursor: default;
 }
 
-/* === CURSADO === (rosado fuerte, sin tachar si es Formación General o Profesional) */
+.asignatura.disponible {
+  cursor: pointer;
+  background-color: #fff0f7;
+}
+
 .asignatura.completado {
-  background-color: #ff66a3; /* Color que llena la barra */
-  opacity: 0.85;
+  background-color: #d47ca0; /* rosado oscuro (color barra vacía) */
+  color: white;
 }
 
-/* Para JS: se puede aplicar tachado condicional según nombre */
-
-/* === BLOQUEADO === */
 .asignatura.bloqueado {
   background-color: #fafafa;
   border-color: #ddd;
@@ -140,64 +154,48 @@ button:hover {
   cursor: not-allowed;
 }
 
-/* === DISPONIBLE === */
-.asignatura.disponible {
-  background-color: #ffd6ec; /* Igual que barra vacía */
-  border-color: #ffb3d9;
-}
-
-/* === Contenido de la asignatura === */
 .asignatura h4 {
   margin: 0 0 5px 0;
   font-size: 1em;
+  word-break: break-word;
 }
 
 .asignatura small {
   display: block;
   font-size: 0.8em;
-  color: #888;
-  margin-bottom: 8px;
+  color: #4a002e;
+  margin-bottom: 5px;
+  word-break: break-word;
 }
 
-/* === Nota input y visual === */
+/* Zona invisible para activar input nota en la esquina superior derecha */
+.zona-nota {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  /* Sin fondo para ser invisible */
+}
+
+/* Input nota oculto por defecto */
 .nota {
   display: none;
+  margin-top: 5px;
   width: 100%;
-  padding: 6px;
+  padding: 5px;
   box-sizing: border-box;
-  border: 1px solid #ccc;
   border-radius: 4px;
+  border: 1px solid #ccc;
   font-size: 0.9em;
-  margin-top: 8px;
 }
 
-.asignatura.mostrando-nota .nota {
-  display: block;
-}
-
+/* Nota mostrada debajo (solo número) */
 .nota-mostrada {
   font-size: 1em;
   font-weight: bold;
   color: #4a002e;
   margin-top: 6px;
-}
-
-/* === Botón en la esquina para ingresar nota === */
-.boton-nota {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 20px;
-  height: 20px;
-  font-size: 14px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: #cc0052;
-}
-
-.asignatura button {
-  margin-top: 8px;
-  width: 100%;
-  font-size: 0.9em;
+  text-decoration: none;
 }
