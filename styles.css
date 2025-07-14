@@ -1,179 +1,23 @@
 /* === Estilos generales === */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #fff0f7;
-  color: #4a002e;
-  margin: 0;
+  background-color: #fff0f7; /* Rosado muy suave */
+  color: #4a002e; /* Morado oscuro para texto principal */
   padding: 20px;
-  overflow-x: auto;
+  margin: 0;
 }
 
 h1 {
   text-align: center;
-  color: #ff66a3;
+  color: #ff66a3; /* Rosado vibrante */
   margin-bottom: 10px;
 }
 
-h2 {
-  color: #cc0052;
-  margin: 10px 0 6px 0;
-}
-
-h3 {
-  color: #cc0052;
-  margin: 5px 0;
-}
-
-/* === Contenedor de años en fila horizontal === */
-#malla-container {
-  display: flex;
-  flex-direction: row;
-  gap: 30px;
-  align-items: flex-start;
-}
-
-/* === Cada año === */
-.año {
-  display: flex;
-  flex-direction: column;
-  min-width: 260px;
-}
-
-/* === Grupo de semestres en fila horizontal === */
-.grid-año {
-  display: flex;
-  flex-direction: row;
-  gap: 12px;
-}
-
-/* === Grupo vertical especial para años 6 y 7 === */
-.grid-año.vertical {
-  flex-direction: column;
-}
-
-/* === Cada semestre === */
-.semestre {
-  background-color: transparent;
-  padding: 10px 0;
-  min-width: 200px;
-}
-
-/* === Título semestre === */
-.semestre h3 {
-  margin: 0 0 8px 0;
-  font-size: 1em;
+h2, h3 {
   color: #cc0052;
 }
 
-/* === Grid de ramos normal (horizontal semestre) === */
-.grid-asignaturas {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-/* === Grid de ramos agrupado (años 6 y 7) === */
-.semestre[data-grupo] .grid-asignaturas {
-  flex-direction: column;
-}
-
-/* === Estilo de ramo === */
-.asignatura {
-  background-color: #ffffff;
-  border: 1px solid #ffb3d9;
-  padding: 6px;
-  border-radius: 6px;
-  position: relative;
-  font-size: 0.8em;
-  height: 120px; /* Un poco más alto para mayor visibilidad */
-  width: 165px; /* Ajustado a 165px para todos los ramos */
-  box-sizing: border-box;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s;
-  overflow: hidden;
-}
-
-/* === Estados visuales === */
-.asignatura.cursando {
-  background-color: #ffb3d9;
-  border-color: #ffb3d9;
-  color: #4a002e;
-  cursor: pointer;
-}
-
-.asignatura.completado {
-  background-color: #ff66a3;
-  border-color: #ff66a3;
-  color: white;
-}
-
-.asignatura.completado h4 {
-  text-decoration: line-through;
-}
-
-.asignatura.completado .nota-mostrada {
-  color: white;
-}
-
-.asignatura.bloqueado {
-  background-color: #ffe5f0;
-  border-color: #ffe5f0;
-  opacity: 0.6;
-  cursor: not-allowed;
-  color: #a06080;
-}
-
-/* === Texto dentro del ramo === */
-.asignatura h4 {
-  margin: 0 0 4px;
-  font-weight: bold;
-}
-
-.asignatura small {
-  display: block;
-  font-size: 0.75em;
-  margin-bottom: 4px;
-  color: #888;
-}
-
-/* === Notas === */
-.nota {
-  width: 100%;
-  padding: 6px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 0.9em;
-}
-
-.nota-mostrada {
-  margin-top: 5px;
-  font-weight: bold;
-  font-size: 1em;
-}
-
-/* === Botón de nota === */
-button {
-  display: none; /* Ocultar botón por defecto */
-  background-color: #ff66a3;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  font-size: 1em;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-/* === Aparición del botón de nota al hacer clic en la esquina inferior derecha === */
-.asignatura .nota-button-visible {
-  display: block;
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-}
-
-/* === Barra de progreso === */
+/* === Barra de progreso de avance === */
 #avance {
   text-align: center;
   margin-bottom: 30px;
@@ -183,14 +27,14 @@ button {
   width: 80%;
   margin: 10px auto;
   height: 20px;
-  background-color: #ffb3d9;
+  background-color: #ffb3d9; /* Rosado claro */
   border-radius: 10px;
   overflow: hidden;
 }
 
 .progreso {
   height: 100%;
-  background-color: #ff66a3;
+  background-color: #ff66a3; /* Rosado fuerte */
   width: 0%;
   transition: width 0.4s ease-in-out;
 }
@@ -198,23 +42,152 @@ button {
 #porcentaje {
   font-size: 2em;
   font-weight: bold;
-  color: #cc0052;
+  color: #cc0052; /* Rosado profundo */
 }
 
-/* === Botón resetear === */
-button.reset {
-  font-size: 0.8em;
-  padding: 6px 12px;
-  margin-top: 20px;
-  cursor: pointer;
-  background-color: #ffcccb;
-  border-radius: 5px;
+button {
+  background-color: #ff66a3;
+  color: white;
   border: none;
-  color: #4a002e;
-  transition: background-color 0.3s;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1em;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
 }
 
-button.reset:hover {
-  background-color: #ff99a1;
+button:hover {
+  background-color: #e05590;
 }
 
+/* === Contenedor de semestres y asignaturas === */
+#malla-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.año {
+  margin-bottom: 20px;
+  margin-top: 2mm; /* Separación de 2mm entre años */
+}
+
+.semestre {
+  margin-bottom: 2mm; /* Separación de 2mm entre semestres dentro de un mismo año */
+  background-color: #ffe5f0;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.semestre h3 {
+  margin-top: 0;
+  color: #d60073;
+}
+
+.grid-asignaturas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); /* Ancho ajustado de ramos a 155px */
+  gap: 15px;
+}
+
+.asignatura {
+  background-color: #ffffff;
+  border: 1px solid #ffcccc;
+  padding: 12px;
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  width: 155px; /* Ancho de 155px para los ramos */
+}
+
+.asignatura.completado {
+  background-color: #ffd6ec;
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.asignatura.cursando {
+  background-color: #ffb3d9; /* Rosado claro para ramos cursando */
+}
+
+.asignatura.bloqueado {
+  background-color: #fafafa;
+  border-color: #ddd;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.asignatura h4 {
+  margin: 0 0 5px 0;
+  font-size: 1em;
+}
+
+.asignatura small {
+  display: block;
+  font-size: 0.8em;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.nota {
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.nota-button-visible {
+  width: 100%;
+  font-size: 0.9em;
+  background-color: #ff66a3;
+  color: white;
+  padding: 8px;
+  margin-top: 10px;
+  border-radius: 5px;
+  display: none;
+  cursor: pointer;
+}
+
+.nota-button-visible:hover {
+  background-color: #e05590;
+}
+
+/* === Estilos adicionales para resetear === */
+#reset-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #ff66a3;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#reset-btn:hover {
+  background-color: #e05590;
+}
+
+#footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9em;
+  color: #888;
+}
+
+#footer h3 {
+  margin: 0;
+  font-size: 1.2em;
+  color: #ff66a3;
+}
+
+/* === Estilo de la malla vertical para semestres 11-12 y 13-14 === */
+.grid-año.vertical .semestre {
+  flex-direction: column; /* Los ramos se mostrarán verticalmente */
+}
