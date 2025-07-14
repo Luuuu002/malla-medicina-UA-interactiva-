@@ -1,4 +1,4 @@
-/* === Estilos base === */
+/* === Estilos generales === */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #fff0f7;
@@ -8,7 +8,6 @@ body {
   overflow-x: auto;
 }
 
-/* === Títulos === */
 h1 {
   text-align: center;
   color: #ff66a3;
@@ -17,7 +16,7 @@ h1 {
 
 h2 {
   color: #cc0052;
-  margin: 0 0 5px 10px;
+  margin: 10px 0 6px 0;
 }
 
 h3 {
@@ -25,35 +24,43 @@ h3 {
   margin: 5px 0;
 }
 
-/* === Estructura horizontal de años === */
+/* === Contenedor horizontal de años === */
 #malla-container {
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 30px;
   align-items: flex-start;
 }
 
-/* === Año === */
+/* === Cada año === */
 .año {
   display: flex;
   flex-direction: column;
-  min-width: 260px;
+  min-width: 280px;
 }
 
-/* === Semestre === */
+/* === Contenedor horizontal de semestres === */
+.grid-año {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+/* === Semestre individual === */
 .semestre {
   background-color: transparent;
-  padding: 10px 5px;
+  padding: 10px 0;
+  min-width: 240px;
 }
 
 /* === Grid de asignaturas === */
 .grid-asignaturas {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   gap: 10px;
 }
 
-/* === Estilos de ramos === */
+/* === Asignatura (ramo) === */
 .asignatura {
   background-color: #ffffff;
   border: 1px solid #ffb3d9;
@@ -61,15 +68,15 @@ h3 {
   border-radius: 6px;
   position: relative;
   font-size: 0.8em;
-  height: 80px;
+  height: 100px;         /* más alto */
   width: 100%;
   box-sizing: border-box;
   box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-  overflow: hidden;
   transition: background-color 0.3s;
+  overflow: hidden;
 }
 
-/* Cursando */
+/* Estado: cursando */
 .asignatura.cursando {
   background-color: #ffb3d9;
   border-color: #ffb3d9;
@@ -77,7 +84,7 @@ h3 {
   color: #4a002e;
 }
 
-/* Completado */
+/* Estado: completado */
 .asignatura.completado {
   background-color: #ff66a3;
   border-color: #ff66a3;
@@ -92,7 +99,7 @@ h3 {
   color: white;
 }
 
-/* Bloqueado */
+/* Estado: bloqueado */
 .asignatura.bloqueado {
   background-color: #ffe5f0;
   border-color: #ffe5f0;
@@ -101,18 +108,26 @@ h3 {
   color: #a06080;
 }
 
-/* Título del ramo */
+/* Título de asignatura */
 .asignatura h4 {
   margin: 0 0 4px;
   font-weight: bold;
 }
 
-/* Tipo de formación */
+/* Área de formación */
 .asignatura small {
   display: block;
   font-size: 0.75em;
   margin-bottom: 4px;
   color: #555;
+}
+
+/* Nota mostrada (cuando completado) */
+.nota-mostrada {
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 4px;
 }
 
 /* Input de nota (oculto inicialmente) */
@@ -126,21 +141,13 @@ h3 {
   padding: 2px;
   border: 1px solid #ccc;
   border-radius: 3px;
-  z-index: 10;
   background-color: white;
+  z-index: 10;
 }
 
-/* Mostrar input manualmente al hacer clic (clase añadida con JS) */
+/* Mostrar input al hacer clic en esquina */
 .asignatura.mostrar-nota .nota {
   display: block;
-}
-
-/* Nota mostrada tras completar */
-.nota-mostrada {
-  font-size: 1em;
-  font-weight: bold;
-  text-align: center;
-  margin-top: 4px;
 }
 
 /* === Barra de progreso === */
@@ -171,16 +178,15 @@ h3 {
   color: #cc0052;
 }
 
-/* === Botón === */
+/* === Botón general === */
 button {
   background-color: #ff66a3;
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 5px 12px;
   cursor: pointer;
   border-radius: 4px;
-  font-size: 0.9em;
-  margin-top: 8px;
+  font-size: 0.8em;
 }
 
 button:hover {
