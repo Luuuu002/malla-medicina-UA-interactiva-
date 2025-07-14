@@ -5,19 +5,36 @@ body {
   color: #4a002e; /* Morado oscuro para texto principal */
   padding: 20px;
   margin: 0;
+  position: relative;
 }
 
 h1 {
   text-align: center;
   color: #ff66a3; /* Rosado vibrante */
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
-.creador {
-  text-align: center;
-  color: #ff66a3;
-  font-weight: bold;
-  margin-bottom: 20px;
+h2, h3 {
+  color: #cc0052;
+}
+
+/* === Botón de Resetear Malla === */
+#reset-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #ff66a3;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+  z-index: 999;
+}
+
+#reset-btn:hover {
+  background-color: #e05590;
 }
 
 /* === Barra de progreso de avance === */
@@ -68,15 +85,15 @@ button:hover {
 #malla-container {
   max-width: 1200px;
   margin: 0 auto;
+  padding-top: 60px; /* Para dejar espacio al botón de reset */
 }
 
 .año {
   margin-bottom: 2mm; /* Separación de 2mm entre años */
-  margin-top: 2mm;
 }
 
 .semestre {
-  margin-bottom: 1mm; /* Separación de 1mm entre semestres dentro de un mismo año */
+  margin-bottom: 2mm; /* Separación de 2mm entre semestres */
   background-color: #ffe5f0;
   border-radius: 10px;
   padding: 15px;
@@ -90,8 +107,8 @@ button:hover {
 
 .grid-asignaturas {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); /* Ancho ajustado de ramos a 155px */
-  gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+  gap: 1mm; /* Separación entre ramos: 1mm */
 }
 
 .asignatura {
@@ -103,23 +120,12 @@ button:hover {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
   width: 155px; /* Ancho fijo */
+  cursor: pointer;
 }
 
-.asignatura.completado {
-  background-color: #ffd6ec;
+.asignatura.completado h4 {
   text-decoration: line-through;
-  opacity: 0.6;
-}
-
-.asignatura.cursando {
-  background-color: #ffb3d9; /* Rosado claro para ramos cursando */
-}
-
-.asignatura.bloqueado {
-  background-color: #fafafa;
-  border-color: #ddd;
-  opacity: 0.5;
-  cursor: not-allowed;
+  color: #888;
 }
 
 .asignatura h4 {
@@ -143,52 +149,31 @@ button:hover {
   font-size: 0.9em;
 }
 
-.nota-button-visible {
-  width: 100%;
-  font-size: 0.9em;
-  background-color: #ff66a3;
-  color: white;
-  padding: 8px;
-  margin-top: 10px;
-  border-radius: 5px;
+.numero-contextual {
   display: none;
-  cursor: pointer;
-}
-
-.nota-button-visible:hover {
-  background-color: #e05590;
-}
-
-.nota-mostrada {
-  margin-top: 8px;
+  position: absolute;
+  bottom: -20px;
+  right: 0;
   font-size: 0.9em;
-  color: #7a0040;
-  display: none;
+  color: #cc0052;
 }
 
-.asignatura.completado .nota-mostrada {
-  display: block;
+/* === Estilo de la malla vertical para semestres 11-12 y 13-14 === */
+.grid-año {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.grid-año.vertical {
+  flex-direction: column;
+}
+
+.grid-año.vertical .semestre {
+  flex-direction: column;
 }
 
 /* === Estilos adicionales para resetear === */
-#reset-btn {
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  background-color: #ff66a3;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  font-size: 1em;
-  cursor: pointer;
-  border-radius: 5px;
-  z-index: 1000;
-}
-
-#reset-btn:hover {
-  background-color: #e05590;
-}
-
 #footer {
   text-align: center;
   margin-top: 20px;
@@ -200,9 +185,4 @@ button:hover {
   margin: 0;
   font-size: 1.2em;
   color: #ff66a3;
-}
-
-/* === Estilo de la malla vertical para semestres 11-12 y 13-14 === */
-.grid-año.vertical .semestre {
-  flex-direction: column; /* Los ramos se mostrarán verticalmente */
 }
