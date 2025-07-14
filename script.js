@@ -1,3 +1,5 @@
+// === Manejador de la malla académica ===
+
 let asignaturas = [];
 let estados = {};
 
@@ -39,29 +41,47 @@ function renderMalla() {
   });
 
   // Agrupar semestres por años (cada 2 semestres)
+  // Además, ajustar nombre de semestres 11 y 12, 13 y 14
   const años = {};
-  Object.keys(semestres).forEach(sem => {
+  Object.keys(semestres).forEach(semStr => {
+    const sem = parseInt(semStr, 10);
     const año = Math.ceil(sem / 2);
     if (!años[año]) años[año] = [];
-    años[año].push({ semestre: sem, asignaturas: semestres[sem] });
+    años[año].push({ 
+      semestre: sem, 
+      asignaturas: semestres[sem],
+      nombre: (sem === 11) ? "Semestre 11 y 12" : (sem === 13) ? "Semestre 13 y 14" : `Semestre ${sem}`
+    });
   });
 
-  Object.keys(años).forEach(año => {
+  // Ordenar los años para mostrarlos en fila (horizontal)
+  const añosOrdenados = Object.keys(años).map(n => parseInt(n, 10)).sort((a,b) => a-b);
+
+  // Contenedor horizontal de años
+  const divAñosContenedor = document.createElement("div");
+  divAñosContenedor.style.display = "flex";
+  divAñosContenedor.style.gap = "2mm";
+  divAñosContenedor.style.overflowX = "auto";
+
+  añosOrdenados.forEach(año => {
     const divAño = document.createElement("div");
     divAño.className = "año";
-    divAño.innerHTML = `<h2>AÑO ${año}</h2>`;
 
+    // Título año arriba
+    const h2 = document.createElement("h2");
+    h2.textContent = `AÑO ${año}`;
+    divAño.appendChild(h2);
+
+    // Grid horizontal para semestres de este año
     const gridAño = document.createElement("div");
     gridAño.className = "grid-año";
+    gridAño.style.gap = "1mm";
 
-    años[año].forEach(grupo => {
-      const nombreSem = (grupo.semestre == 11) ? "Semestre 11 y 12" :
-                         (grupo.semestre == 13) ? "Semestre 13 y 14" :
-                         `Semestre ${grupo.semestre}`;
-
+    // Ordenar semestres dentro del año
+    años[año].sort((a,b) => a.semestre - b.semestre).forEach(grupo => {
       const divSemestre = document.createElement("div");
       divSemestre.className = "semestre";
-      divSemestre.innerHTML = `<h3>${nombreSem}</h3>`;
+      divSemestre.innerHTML = `<h3>${grupo.nombre}</h3>`;
 
       const grid = document.createElement("div");
       grid.className = "grid-asignaturas";
@@ -71,73 +91,87 @@ function renderMalla() {
         const completado = !!estados[a.id]?.completado;
 
         const div = document.createElement("div");
-        div.className = `asignatura${completado ? ' completado' : (bloqueado ? ' bloqueado' : '')}`;
 
-        // Clase especial para Medicina Interna
-        if (a.nombre.toLowerCase().includes("medicina interna")) {
-          div.style.gridColumn = "span 2";
-          div.style.width = "296px"; // 146px * 2 + espacio
-        }
+        // Clases especiales para internados que abarcan 2 semestres
+        // Medicina Interna (semestres 5 y 6)
+        // Ejemplo: otros internados en 6º y 7º año
+        const esMedInterna = a.nombre.toLowerCase().includes("medicina interna");
+        const esInternado6o7o = a.nombre.toLowerCase().includes("internado") && (a.semestre === 11 || a.semestre === 13);
 
-        const notaHTML = `
-          <div class="nota-section"${completado ? ' style="display:none;"' : ''}>
-            <input class="nota" type="text" placeholder="Ingresa tu nota" value="${estados[a.id]?.nota || ''}">
-          </div>
-        `;
+        let claseAsignatura = "asignatura";
+        if (completado) claseAsignatura += " completado";
+        else if (bloqueado) claseAsignatura += " bloqueado";
+        else if (!completado) claseAsignatura += " cursando";
+
+        if (esMedInterna || esInternado6o7o) claseAsignatura += " med-interna";
+
+        div.className = claseAsignatura;
 
         div.innerHTML = `
           <h4>${a.nombre}</h4>
           <small>${a.area}</small>
           ${completado && estados[a.id]?.nota 
-            ? `<p class="nota-mostrada"><strong>${estados[a.id].nota}</strong></p>` 
-            : notaHTML}
-          <div class="nota-button"></div>
+            ? `<p class="nota-mostrada">Nota: <strong>${estados[a.id].nota}</strong></p>` 
+            : ''}
+          <div class="nota-section">
+            <input class="nota" type="text" placeholder="Ingresa tu nota" value="${estados[a.id]?.nota || ''}">
+          </div>
+          <div class="nota-button" title="Mostrar/Ocultar nota"></div>
         `;
 
-        // Evento de clic solo si no está bloqueado ni completado
+        // Evento clic en la asignatura
+        div.style.position = "relative";
+
         if (!bloqueado && !completado) {
           div.style.cursor = "pointer";
 
           div.onclick = (e) => {
+            // No interferir con input o botón nota
+            if (e.target.classList.contains("nota") || e.target.classList.contains("nota-button")) return;
+
+            // Detectar clic en esquina inferior derecha para mostrar/ocultar input nota
             const rect = div.getBoundingClientRect();
             const clickX = e.clientX - rect.left;
             const clickY = e.clientY - rect.top;
-
             const esquinaAncho = rect.width * 0.25;
             const esquinaAlto = rect.height * 0.25;
 
             if (clickX > rect.width - esquinaAncho && clickY > rect.height - esquinaAlto) {
-              // Mostrar u ocultar campo nota
+              // Alternar visibilidad input nota
               div.classList.toggle("mostrar-nota");
               return;
             }
 
-            const notaInput = div.querySelector('.nota');
-            const nota = notaInput ? notaInput.value.trim() : "";
+            // Si la nota está visible, no hacer nada al clic fuera del botón ni input
+          };
 
+          // Click en el botón invisible (esquina inferior derecha) para toggle nota
+          const botonNota = div.querySelector(".nota-button");
+          botonNota.onclick = (ev) => {
+            ev.stopPropagation();
+            div.classList.toggle("mostrar-nota");
+          };
+
+          // Guardar nota cuando cambie el input
+          const inputNota = div.querySelector(".nota");
+          inputNota.onchange = (ev) => {
+            const valor = ev.target.value.trim();
+            estados[a.id].nota = valor;
+            guardarEstado();
+          };
+
+          // Validar nota y marcar completado si clic fuera del botón esquina y nota válida
+          div.addEventListener("dblclick", (ev) => {
+            if (!div.classList.contains("mostrar-nota")) return;
+            const nota = estados[a.id].nota;
             if (!nota || isNaN(nota) || nota < 1 || nota > 7) {
               alert("Debes ingresar una nota válida entre 1.0 y 7.0 antes de marcar como completado.");
               return;
             }
-
-            estados[a.id].nota = nota;
             estados[a.id].completado = true;
             guardarEstado();
             renderMalla();
-          };
-        }
-
-        // Guardar nota al escribir
-        if (!completado) {
-          setTimeout(() => {
-            const input = div.querySelector('.nota');
-            if (input) {
-              input.onchange = (ev) => {
-                estados[a.id].nota = ev.target.value;
-                guardarEstado();
-              };
-            }
-          }, 0);
+          });
         }
 
         if (bloqueado) {
@@ -152,8 +186,10 @@ function renderMalla() {
     });
 
     divAño.appendChild(gridAño);
-    container.appendChild(divAño);
+    divAñosContenedor.appendChild(divAño);
   });
+
+  container.appendChild(divAñosContenedor);
 
   actualizarAvance();
 }
