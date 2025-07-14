@@ -5,12 +5,12 @@ body {
   color: #4a002e; /* Morado oscuro para texto principal */
   padding: 20px;
   margin: 0;
-  overflow-x: hidden; /* Sin scroll horizontal */
+  overflow-x: hidden; /* Evita scroll horizontal */
 }
 
 h1 {
   text-align: center;
-  color: #ff66a3; /* Rosado vibrante (fucsia claro) */
+  color: #ff66a3; /* Rosado vibrante */
   margin-bottom: 5px;
 }
 
@@ -32,14 +32,14 @@ h1 {
   width: 80%;
   margin: 10px auto;
   height: 20px;
-  background-color: #ff99c1; /* Barra vacía: rosado fucsia claro */
+  background-color: #4a002e; /* COLOR LETRA "Medicina UA" - barra vacía */
   border-radius: 10px;
   overflow: hidden;
 }
 
 .progreso {
   height: 100%;
-  background-color: #b30059; /* Barra llena: fucsia oscuro (más oscuro que barra vacía) */
+  background-color: #ff66a3; /* COLOR BOTÓN resetear y ramo completado */
   width: 0%;
   transition: width 0.4s ease-in-out;
 }
@@ -47,11 +47,11 @@ h1 {
 #porcentaje {
   font-size: 2em;
   font-weight: bold;
-  color: #cc0052; /* Rosado profundo */
+  color: #cc0052;
 }
 
 button {
-  background-color: #ff66a3;
+  background-color: #ff66a3; /* Color del botón resetear y barra llena */
   color: white;
   border: none;
   padding: 10px 20px;
@@ -98,14 +98,16 @@ button:hover {
   font-size: 1.3em;
 }
 
-/* Semestres en columna vertical dentro de cada año */
+/* Semestres en fila horizontal (DE LADO) */
 .grid-año {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 15px;
+  flex-wrap: nowrap;
+  overflow-x: hidden; /* sin barras de scroll */
 }
 
-/* Semestres verticales */
+/* Semestres apilados verticalmente dentro del año */
 .semestre {
   background-color: #fff0f7;
   border-radius: 10px;
@@ -134,7 +136,7 @@ button:hover {
 /* Estilos para cada asignatura */
 .asignatura {
   background-color: #ffffff;
-  border: 1px solid #ffb3d9;
+  border: 1px solid #4a002e; /* borde mismo color que letra "Medicina UA" */
   padding: 10px;
   border-radius: 8px;
   position: relative;
@@ -144,34 +146,45 @@ button:hover {
   cursor: pointer;
   color: #4a002e;
   user-select: none;
+  text-decoration: none; /* No tachar formación básica y formación profesional */
 }
 
+/* Ramo completado */
 .asignatura.completado {
-  background-color: #8e0044; /* rosado oscuro para completados */
+  background-color: #ff66a3; /* Rosado intenso - igual color que barra llena y botón */
   color: white;
   text-decoration: line-through;
 }
 
+/* Ramo que se está cursando */
 .asignatura.cursando {
-  background-color: #ff99c1; /* rosado fucsia claro (color barra vacía) para ramo cursando */
-  color: #4a002e;
+  background-color: #4a002e; /* Color letra Medicina UA */
+  color: #fff0f7;
   text-decoration: none;
 }
 
+/* Ramo bloqueado por prerrequisitos */
 .asignatura.bloqueado {
-  background-color: #ffe5f0; /* rosado clarito */
+  background-color: #ffe5f0; /* Rosado muy claro */
   border-color: #ffd1e5;
   color: #888;
   cursor: not-allowed;
   text-decoration: none;
 }
 
+/* No tachar formación básica ni formación profesional (por clase) */
+.asignatura.formacion {
+  text-decoration: none !important;
+}
+
+/* Título asignatura */
 .asignatura h4 {
   margin: 0 0 5px 0;
   font-size: 1em;
   word-break: break-word;
 }
 
+/* Área asignatura */
 .asignatura small {
   display: block;
   font-size: 0.8em;
