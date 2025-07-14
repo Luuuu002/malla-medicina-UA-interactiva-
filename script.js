@@ -1,5 +1,13 @@
 let asignaturas = [];
 let estados = {};
+const AREAS = [
+  "Formación Básica",
+  "Formación General",
+  "Formación Profesional"
+  // Agrega aquí otras áreas si tienes más
+];
+const SEMESTRES = 14;
+let semestreActual = 1; // Puedes pedirlo al usuario con un modal o input al inicio
 
 // Cargar datos desde data.json
 fetch('data.json')
@@ -26,131 +34,83 @@ function guardarEstado() {
   actualizarAvance();
 }
 
-// Renderizar malla por semestres y mostrar años
 function renderMalla() {
   const container = document.getElementById("malla-container");
   container.innerHTML = "";
 
-  // Agrupar por semestre
-  const semestres = {};
-  asignaturas.forEach(a => {
-    if (!semestres[a.semestre]) semestres[a.semestre] = [];
-    semestres[a.semestre].push(a);
-  });
+  // Encabezados (años y semestres)
+  let header = `<div class="malla-header"><div class="area-header"></div>`;
+  for (let s = 1; s <= SEMESTRES; s++) {
+    let isAnual = (s === 11 || s === 13);
+    let colspan = isAnual ? 2 : 1;
+    let label = isAnual
+      ? `Anual (${s} y ${s+1})`
+      : `Semestre ${s}`;
+    header += `<div class="semestre-header" style="grid-column: span ${colspan};">${label}</div>`;
+    if (isAnual) s++; // saltar siguiente porque ya ocupó dos columnas
+  }
+  header += `</div>`;
+  container.innerHTML += header;
 
-  // Mostrar Años (cada dos semestres)
-  const años = {};
-  Object.keys(semestres).forEach(sem => {
-    const año = Math.ceil(sem / 2); // Agrupa cada dos semestres
-    if (!años[año]) años[año] = [];
-    años[año].push({ semestre: sem, asignaturas: semestres[sem] });
-  });
-
-  Object.keys(años).forEach(año => {
-    const divAño = document.createElement("div");
-    divAño.className = "año";
-    divAño.innerHTML = `<h2>AÑO ${año}</h2>`;
-
-    const gridAño = document.createElement("div");
-    gridAño.className = "grid-año";
-
-    años[año].forEach(grupo => {
-      const divSemestre = document.createElement("div");
-      divSemestre.className = "semestre";
-      divSemestre.innerHTML = `<h3>Semestre ${grupo.semestre}</h3>`;
-
-      const grid = document.createElement("div");
-      grid.className = "grid-asignaturas";
-
-      grupo.asignaturas.forEach(a => {
-        const bloqueado = tienePrerrequisitoNoCompletado(a);
-        const completado = !!estados[a.id]?.completado;
-
-        const div = document.createElement("div");
-        div.className = `asignatura${completado ? ' completado' : (bloqueado ? ' bloqueado' : '')}`;
-        div.innerHTML = `
-          <h4>${a.nombre}</h4>
-          <small>${a.area}</small>
-          ${completado && estados[a.id]?.nota 
-            ? `<p class="nota-mostrada">Nota: <strong>${estados[a.id].nota}</strong></p>` 
-            : ''}
-          ${!completado ? 
-            `<input class="nota" type="text" placeholder="Ingresa tu nota" value="${estados[a.id]?.nota || ''}">`
-            : ''
-          }
+  // Filas por área
+  AREAS.forEach(area => {
+    let fila = `<div class="malla-area"><div class="area-title">${area}</div>`;
+    for (let s = 1; s <= SEMESTRES; s++) {
+      // Buscar ramos de este área y semestre
+      let ramos = asignaturas.filter(a =>
+        a.area === area &&
+        (a.semestre === s || (s === 11 && a.semestre === 12) || (s === 13 && a.semestre === 14))
+      );
+      let isAnual = (s === 11 || s === 13);
+      let colspan = isAnual ? 2 : 1;
+      let ramoDiv = "";
+      ramos.forEach(a => {
+        const completado = estados[a.id]?.completado;
+        const cursando = (semestreActual === a.semestre);
+        ramoDiv += `
+          <div class="asignatura${completado ? ' completado' : ''}${cursando ? ' cursando' : ''}">
+            <span class="nombre">${a.nombre}</span>
+            <span class="nota-corner" onclick="mostrarNotaInput(${a.id}, this)">📝</span>
+            ${estados[a.id]?.nota ? `<span class="nota-value">${estados[a.id].nota}</span>` : ""}
+          </div>
         `;
-
-        // Solo agregar evento si no está bloqueado ni completado
-        if (!bloqueado && !completado) {
-          div.style.cursor = "pointer";
-          div.onclick = (e) => {
-            // Evitar que el click en el input marque como completado
-            if (e.target.classList.contains("nota")) return;
-
-            const notaInput = div.querySelector('.nota');
-            const nota = notaInput ? notaInput.value.trim() : "";
-
-            if (!nota) {
-              alert("Debes ingresar una nota antes de marcar como completado.");
-              return;
-            }
-
-            estados[a.id].nota = nota;
-            estados[a.id].completado = true;
-            guardarEstado();
-            renderMalla();
-          };
-        } else {
-          div.onclick = null;
-        }
-
-        // Guardar nota automáticamente al escribirla
-        if (!completado) {
-          setTimeout(() => {
-            const input = div.querySelector('.nota');
-            if (input) {
-              input.onchange = (ev) => {
-                estados[a.id].nota = ev.target.value;
-                guardarEstado();
-              };
-            }
-          }, 0);
-        }
-
-        grid.appendChild(div);
       });
-
-      divSemestre.appendChild(grid);
-      gridAño.appendChild(divSemestre);
-    });
-
-    divAño.appendChild(gridAño);
-    container.appendChild(divAño);
+      fila += `<div class="asignatura-cell" style="grid-column: span ${colspan};">${ramoDiv}</div>`;
+      if (isAnual) s++; // saltar el siguiente semestre porque ya ocupó dos columnas
+    }
+    fila += `</div>`;
+    container.innerHTML += fila;
   });
 
   actualizarAvance();
 }
 
-// Verificar prerrequisitos
-function tienePrerrequisitoNoCompletado(asignatura) {
-  if (!asignatura.prerrequisito) return false;
-
-  if (typeof asignatura.prerrequisito === 'number') {
-    return !estados[asignatura.prerrequisito]?.completado;
+// Mostrar input para nota (modal simple)
+function mostrarNotaInput(id, elem) {
+  const currentNota = estados[id]?.nota || "";
+  const nota = prompt("Ingrese el promedio para este ramo:", currentNota);
+  if (nota !== null) {
+    estados[id].nota = nota;
+    guardarEstado();
+    renderMalla();
   }
-
-  return asignatura.prerrequisito.some(id => !estados[id]?.completado);
 }
 
-// Actualizar porcentaje de avance
-function actualizarAvance() {
-  const total = asignaturas.length;
-  const completados = asignaturas.filter(a => estados[a.id]?.completado).length;
-  const porcentaje = Math.round((completados / total) * 100);
-
-  document.querySelector(".progreso").style.width = `${porcentaje}%`;
-  document.getElementById("porcentaje").innerText = `${porcentaje}%`;
-}
+// Marcar ramo como completado/tachar
+document.addEventListener("click", function(e) {
+  if (e.target.classList.contains("nombre")) {
+    // Buscar el ramo por nombre
+    const nombre = e.target.textContent;
+    const ramo = asignaturas.find(a => a.nombre === nombre);
+    if (!ramo) return;
+    // Solo si tiene nota
+    if (estados[ramo.id]?.nota && !estados[ramo.id].completado) {
+      estados[ramo.id].completado = true;
+      guardarEstado();
+      renderMalla();
+    }
+  }
+});
 
 // Resetear malla
 function resetearMalla() {
@@ -159,4 +119,12 @@ function resetearMalla() {
     localStorage.removeItem("estadoMalla");
     renderMalla();
   }
+}
+
+function actualizarAvance() {
+  const total = asignaturas.length;
+  const completados = asignaturas.filter(a => estados[a.id]?.completado).length;
+  const porcentaje = Math.round((completados / total) * 100);
+  document.querySelector(".progreso").style.width = `${porcentaje}%`;
+  document.getElementById("porcentaje").innerText = `${porcentaje}%`;
 }
