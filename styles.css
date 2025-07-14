@@ -1,20 +1,37 @@
 /* === Estilos generales === */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #fff0f7;
-  color: #4a002e;
+  background-color: #fff0f7; /* Rosado muy suave */
+  color: #4a002e; /* Morado oscuro para texto principal */
   padding: 20px;
   margin: 0;
 }
 
 h1 {
   text-align: center;
-  color: #ff66a3;
+  color: #ff66a3; /* Rosado vibrante */
   margin-bottom: 10px;
 }
 
 h2, h3 {
   color: #cc0052;
+}
+
+/* === Porcentaje de avance === */
+#avance h2 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #cc0052;
+  font-weight: bold;
+  font-size: 1.4em;
+  margin-bottom: 10px;
+}
+
+#porcentaje {
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
 }
 
 /* === Barra de progreso de avance === */
@@ -27,39 +44,16 @@ h2, h3 {
   width: 80%;
   margin: 10px auto;
   height: 20px;
-  background-color: #ffb3d9;
+  background-color: #ffb3d9; /* Rosado claro */
   border-radius: 10px;
   overflow: hidden;
 }
 
 .progreso {
   height: 100%;
-  background-color: #ff66a3;
+  background-color: #ff66a3; /* Rosado fuerte */
   width: 0%;
   transition: width 0.4s ease-in-out;
-}
-
-#porcentaje {
-  font-size: 2em;
-  font-weight: bold;
-  color: #cc0052;
-}
-
-/* === Botones === */
-button {
-  background-color: #ff66a3;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 1em;
-  margin-top: 10px;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #e05590;
 }
 
 /* === Botón Reset === */
@@ -81,21 +75,32 @@ button:hover {
   background-color: #e05590;
 }
 
-/* === Contenedor de malla === */
+/* === Contenedor de la malla === */
 #malla-container {
   max-width: 1200px;
   margin: 0 auto;
-  display: flex;
-  gap: 2mm; /* Separación entre AÑOS distintos */
-  overflow-x: auto;
   padding-bottom: 20px;
+}
+
+/* === Distribución horizontal de semestres por año === */
+.grid-año {
+  display: flex;
+  gap: 1mm; /* 1mm entre semestres del mismo año */
+  flex-wrap: nowrap;
 }
 
 /* === Año académico === */
 .año {
-  display: flex;
-  flex-direction: row;
-  gap: 1mm; /* Separación entre SEMESTRES del mismo año */
+  margin-bottom: 20px; /* 2mm entre años distintos */
+}
+
+.año > h2 {
+  margin-bottom: 10px;
+  color: #cc0052;
+  font-weight: bold;
+  font-size: 1.4em;
+  text-align: left;
+  padding-left: 8px;
 }
 
 /* === Semestre === */
@@ -105,22 +110,23 @@ button:hover {
   padding: 15px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
   margin-bottom: 0;
+  min-width: 150px;
+  flex-shrink: 0;
 }
 
 .semestre h3 {
   margin-top: 0;
   color: #d60073;
-  text-align: center;
 }
 
-/* === Grid de asignaturas en listado vertical === */
+/* === Grid de asignaturas === */
 .grid-asignaturas {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 146px);
+  gap: 0.1mm;
 }
 
-/* === Asignaturas individuales === */
+/* === Asignaturas === */
 .asignatura {
   background-color: #ffffff;
   border: 1px solid #ffcccc;
@@ -130,12 +136,12 @@ button:hover {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
   width: 146px;
-  min-height: 90px;
+  margin: 0.1mm;
 }
 
 .asignatura h4 {
   margin: 0 0 5px 0;
-  font-size: 1em;
+  font-size: 0.9em; /* más pequeño */
 }
 
 .asignatura small {
@@ -147,20 +153,19 @@ button:hover {
 
 /* === Estados de las asignaturas === */
 .asignatura.completado {
-  background-color: #ff66a3; /* igual que .progreso */
+  background-color: #ff66a3; /* igual al color de la barra de progreso */
   text-decoration: none;
-  opacity: 1;
-  color: white;
+  opacity: 0.6;
   cursor: default;
 }
 
 .asignatura.completado h4 {
   text-decoration: line-through;
-  color: white;
+  background-color: transparent;
 }
 
 .asignatura.cursando {
-  background-color: #ffb3d9; /* igual que .barra */
+  background-color: #ffb3d9; /* igual al fondo de la barra */
 }
 
 .asignatura.bloqueado {
@@ -178,7 +183,6 @@ button:hover {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 0.9em;
-  margin-top: 6px;
 }
 
 /* === Nota mostrada === */
@@ -188,28 +192,27 @@ button:hover {
   margin-top: 8px;
 }
 
-/* === Botón de nota oculto y toggle === */
+/* === Botón de nota oculto y funcional === */
 .nota-button {
   position: absolute;
   bottom: 6px;
   right: 6px;
+  width: 16px;
+  height: 16px;
   background-color: #ff66a3;
-  color: white;
-  padding: 4px 8px;
-  font-size: 0.7em;
-  border-radius: 4px;
+  border-radius: 50%;
   cursor: pointer;
-  display: none;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .asignatura:hover .nota-button {
-  display: block;
+  opacity: 1;
 }
 
-/* === Sección de nota oculta inicialmente === */
+/* === Mostrar u ocultar sección de nota === */
 .asignatura .nota-section {
   display: none;
-  margin-top: 8px;
 }
 
 .asignatura.mostrar-nota .nota-section {
