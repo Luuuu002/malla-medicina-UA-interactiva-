@@ -30,7 +30,7 @@ h2, h3 {
   gap: 8px;
   color: #cc0052;
   font-weight: bold;
-  font-size: 1.1em;
+  font-size: 1.1em; /* ligeramente más pequeño que antes */
   margin-bottom: 10px;
 }
 
@@ -91,7 +91,7 @@ h2, h3 {
   margin-bottom: 10px;
   color: #cc0052;
   font-weight: bold;
-  font-size: 1em;
+  font-size: 1.1em;
   text-align: left;
   padding-left: 8px;
 }
@@ -111,18 +111,17 @@ h2, h3 {
   padding: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
   min-width: 130px;
-  flex-shrink: 0;
   max-width: 140px;
+  flex-shrink: 0;
 }
 
-.semestre h3 {
-  margin-top: 0;
-  color: #d60073;
-  font-size: 1em;
-  white-space: nowrap;
+/* Ajuste especial para semestres 6 y 7: 2mm más anchos */
+.semestre.seis-siete {
+  min-width: 142px;  /* +2mm aprox */
+  max-width: 144px;
 }
 
-/* === Grid de asignaturas === */
+/* === Grid de asignaturas (verticales, centrados) === */
 .grid-asignaturas {
   display: flex;
   flex-direction: column;
@@ -134,7 +133,7 @@ h2, h3 {
 .asignatura {
   background-color: #ffffff;
   border: 1px solid #ffcccc;
-  padding: 6px;
+  padding: 6px 8px;
   border-radius: 8px;
   position: relative;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -145,6 +144,13 @@ h2, h3 {
   white-space: normal;
   line-height: 1.2em;
   word-break: break-word;
+  min-height: 60px; /* un poco más alto para mejor lectura */
+}
+
+/* Asignaturas dentro de semestres 6 y 7: menos ancho y más alto */
+.semestre.seis-siete .asignatura {
+  width: 100px !important;
+  min-height: 75px !important;
 }
 
 .asignatura h4 {
@@ -155,6 +161,7 @@ h2, h3 {
   word-break: break-word;
 }
 
+/* Texto más pequeño y compacto para el área */
 .asignatura small {
   display: block;
   font-size: 0.75em;
@@ -224,11 +231,12 @@ h2, h3 {
   display: block;
 }
 
-/* === Medicina Interna centrada y más ancha */
+/* === Medicina Interna centrada y más ancha, no más alta === */
 .asignatura.med-interna {
   width: 230px !important;
   min-height: auto;
-  margin: auto;          /* centrado horizontal */
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -236,17 +244,21 @@ h2, h3 {
   text-align: center;
 }
 
-/* === Internados más verticales, menos anchos */
+/* Centrar mejor el semestre 5 y 6 para medicina interna */
+.semestre.con-med-interna {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  max-width: 250px;
+}
+
+/* === Internados en dos líneas, más verticales y menos anchos === */
 .asignatura.internado {
-  width: 100px !important;   /* menos ancho */
-  min-height: 130px;         /* más alto */
+  width: 100px !important;
+  min-height: 80px !important;
   font-size: 0.65em;
   white-space: normal;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  line-height: 1.2em;
   word-break: break-word;
 }
 
