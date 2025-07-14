@@ -54,7 +54,7 @@ function renderMalla() {
     años[año].push({ semestre: sem, asignaturas: semestres[sem] });
   });
 
-  // Crear estructura por año
+  // Crear estructura por año (años en fila horizontal, semestres en columna)
   Object.keys(años).forEach(año => {
     const divAño = document.createElement("div");
     divAño.className = "año";
@@ -91,10 +91,12 @@ function renderMalla() {
         const evitarTachado = ["Formación General", "Formación Profesional", "Formación Básica"];
         if (completado && !evitarTachado.includes(a.area)) {
           div.style.textDecoration = "line-through";
+        } else {
+          div.style.textDecoration = "none";
         }
 
         div.innerHTML = `
-          <button class="boton-nota">🖊️</button>
+          <div class="zona-nota" title="Haz clic aquí para ingresar nota"></div>
           <h4>${a.nombre}</h4>
           <small>${a.area}</small>
           ${completado && estados[a.id]?.nota 
@@ -103,20 +105,29 @@ function renderMalla() {
           <input class="nota" type="text" placeholder="Ingresa nota" value="${estados[a.id]?.nota || ''}">
         `;
 
-        // Mostrar input de nota al hacer clic en el lápiz
-        const botonNota = div.querySelector('.boton-nota');
+        // Zona para mostrar input nota (esquina superior derecha)
+        const zonaNota = div.querySelector('.zona-nota');
         const inputNota = div.querySelector('.nota');
-        botonNota.onclick = (e) => {
+        inputNota.style.display = "none"; // Oculto por defecto
+
+        zonaNota.onclick = (e) => {
           e.stopPropagation();
-          div.classList.toggle("mostrando-nota");
-          inputNota.focus();
+          if (inputNota.style.display === "none") {
+            inputNota.style.display = "block";
+            inputNota.focus();
+          } else {
+            inputNota.style.display = "none";
+          }
         };
 
         // Clic para marcar como completado
         if (!bloqueado && !completado) {
           div.style.cursor = "pointer";
           div.onclick = (e) => {
-            if (e.target.classList.contains("nota") || e.target.classList.contains("boton-nota")) return;
+            if (
+              e.target.classList.contains("nota") ||
+              e.target.classList.contains("zona-nota")
+            ) return;
 
             const notaInput = div.querySelector('.nota');
             const nota = notaInput ? notaInput.value.trim() : "";
