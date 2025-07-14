@@ -84,7 +84,7 @@ h2, h3 {
 
 /* === Año académico === */
 .año {
-  margin-bottom: 20px; /* 2mm entre años */
+  margin-bottom: 20px;
 }
 
 .año > h2 {
@@ -99,7 +99,7 @@ h2, h3 {
 /* === Grid horizontal de semestres por año === */
 .grid-año {
   display: flex;
-  gap: 1mm; /* 1mm entre semestres del mismo año */
+  gap: 1mm;
   flex-wrap: nowrap;
   overflow-x: auto;
 }
@@ -123,7 +123,7 @@ h2, h3 {
 /* === Grid de asignaturas === */
 .grid-asignaturas {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 146px);
+  grid-template-columns: repeat(auto-fill, 144px);
   gap: 0.1mm;
 }
 
@@ -136,18 +136,18 @@ h2, h3 {
   position: relative;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
-  width: 146px;
+  width: 144px;
   margin: 0.1mm;
 }
 
 .asignatura h4 {
   margin: 0 0 5px 0;
-  font-size: 0.9em;
+  font-size: 0.85em; /* Más pequeño */
 }
 
 .asignatura small {
   display: block;
-  font-size: 0.8em;
+  font-size: 0.75em; /* Más pequeño */
   color: #888;
   margin-bottom: 8px;
 }
