@@ -138,15 +138,11 @@ h2, h3 {
   transition: background-color 0.3s ease;
   width: 144px;
   margin: 0.1mm;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
 }
 
 .asignatura h4 {
   margin: 0 0 5px 0;
-  font-size: 0.85em; /* Tamaño más pequeño */
+  font-size: 0.85em; /* Más pequeño */
 }
 
 .asignatura small {
@@ -221,9 +217,7 @@ h2, h3 {
 /* === Medicina Interna (doble ancho) === */
 .asignatura.med-interna {
   grid-column: span 2;
-  width: 296px !important; /* Doble de tamaño */
-  font-size: 1em;
-  line-height: 1.5;
+  width: 296px !important;
 }
 
 /* === Footer === */
@@ -238,17 +232,4 @@ h2, h3 {
   margin: 0;
   font-size: 1.2em;
   color: #ff66a3;
-}
-
-/* === Estilos adicionales para semestre 5 === */
-.semestre-5 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.semestre-5 .asignatura {
-  width: 100%;
-  margin-bottom: 8px;
-  font-size: 0.9em; /* Ajuste en tamaño de letra para semestre 5 */
-}
+}         
