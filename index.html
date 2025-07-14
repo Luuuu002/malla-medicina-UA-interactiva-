@@ -8,18 +8,23 @@
 </head>
 <body>
 
-  <h1>✨🩺 Medicina UA 🥼✨</h1>
-  <p class="creador">creada por Luciana Pardal Álvarez <span class="corazon">💖</span></p>
+  <!-- Botón Reset -->
+  <button id="reset-btn" onclick="resetearMalla()">Resetear Malla</button>
 
+  <!-- Título principal -->
+  <h1>✨🩺 Medicina UA 🪼✨</h1>
+  <p class="creador" style="text-align: center;">creada por Luciana Pardal Álvarez <span class="corazon">💖</span></p>
+
+  <!-- Avance -->
   <div id="avance">
     <h2>Porcentaje de avance:</h2>
     <div class="barra">
       <div class="progreso"></div>
     </div>
     <p id="porcentaje">0%</p>
-    <button onclick="resetearMalla()">Resetear malla</button>
   </div>
 
+  <!-- Contenedor de la malla -->
   <div id="malla-container"></div>
 
   <!-- Scripts -->
