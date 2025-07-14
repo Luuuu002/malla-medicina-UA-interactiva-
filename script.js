@@ -59,7 +59,13 @@ function renderMalla() {
     años[año].forEach(grupo => {
       const divSemestre = document.createElement("div");
       divSemestre.className = "semestre";
-      divSemestre.innerHTML = `<h3>Semestre ${grupo.semestre}</h3>`;
+
+      // Títulos especiales
+      let titulo = `Semestre ${grupo.semestre}`;
+      if (parseInt(grupo.semestre) === 11) titulo = "Semestre 11 y 12";
+      if (parseInt(grupo.semestre) === 13) titulo = "Semestre 13 y 14";
+
+      divSemestre.innerHTML = `<h3>${titulo}</h3>`;
 
       const grid = document.createElement("div");
       grid.className = "grid-asignaturas";
@@ -70,34 +76,33 @@ function renderMalla() {
 
         const div = document.createElement("div");
         div.className = `asignatura${completado ? ' completado' : (bloqueado ? ' bloqueado' : '')}`;
+        div.dataset.id = a.id;
+
+        const notaHTML = completado && estados[a.id]?.nota 
+          ? `<p class="nota-mostrada">Nota: <strong>${estados[a.id].nota}</strong></p>`
+          : `<div class="nota-section">
+              <input class="nota" type="text" placeholder="Ingresa tu nota" value="${estados[a.id]?.nota || ''}">
+            </div>`;
+
         div.innerHTML = `
           <h4>${a.nombre}</h4>
           <small>${a.area}</small>
-          ${completado && estados[a.id]?.nota 
-            ? `<p class="nota-mostrada">Nota: <strong>${estados[a.id].nota}</strong></p>` 
-            : ''}
-          ${!completado ? 
-            `<input class="nota" type="text" placeholder="Ingresa tu nota" value="${estados[a.id]?.nota || ''}">`
-            : ''
-          }
+          ${notaHTML}
+          <div class="nota-button">Nota</div>
         `;
 
-        // Solo agregar evento si no está bloqueado ni completado
+        // Click en botón de nota (esquina inferior derecha)
+        const btnNota = div.querySelector(".nota-button");
+        btnNota.onclick = (e) => {
+          e.stopPropagation();
+          div.classList.toggle("mostrar-nota");
+        };
+
+        // Click en el ramo para marcar como completado
         if (!bloqueado && !completado) {
           div.style.cursor = "pointer";
           div.onclick = (e) => {
-            if (e.target.classList.contains("nota")) return;
-
-            const rect = div.getBoundingClientRect();
-            const clickX = e.clientX - rect.left;
-            const clickY = e.clientY - rect.top;
-
-            const esquinaAncho = rect.width * 0.25;
-            const esquinaAlto = rect.height * 0.25;
-
-            if (clickX > rect.width - esquinaAncho && clickY > rect.height - esquinaAlto) {
-              return; // Clic en esquina inferior derecha: no marcar
-            }
+            if (e.target.classList.contains("nota") || e.target.classList.contains("nota-button")) return;
 
             const notaInput = div.querySelector('.nota');
             const nota = notaInput ? notaInput.value.trim() : "";
@@ -114,7 +119,7 @@ function renderMalla() {
           };
         }
 
-        // Guardar nota al escribir, sin marcar como completado
+        // Guardar nota sin marcar como completado
         if (!completado) {
           setTimeout(() => {
             const input = div.querySelector('.nota');
