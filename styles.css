@@ -99,8 +99,8 @@ h2, h3 {
 /* === Grid horizontal de semestres por año === */
 .grid-año {
   display: flex;
-  gap: 1mm;
-  flex-wrap: nowrap;
+  flex-direction: row;
+  gap: 10px;
   overflow-x: auto;
 }
 
@@ -110,7 +110,6 @@ h2, h3 {
   border-radius: 10px;
   padding: 15px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  margin-bottom: 0;
   min-width: 150px;
   flex-shrink: 0;
 }
@@ -122,34 +121,36 @@ h2, h3 {
 
 /* === Grid de asignaturas === */
 .grid-asignaturas {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 144px);
-  gap: 0.1mm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
 }
 
 /* === Asignaturas === */
 .asignatura {
   background-color: #ffffff;
   border: 1px solid #ffcccc;
-  padding: 12px;
+  padding: 6px;
   border-radius: 8px;
   position: relative;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
   width: 144px;
-  margin: 0.1mm;
+  font-size: 0.65em;
+  text-align: center;
 }
 
 .asignatura h4 {
-  margin: 0 0 5px 0;
-  font-size: 0.85em; /* Más pequeño */
+  margin: 0;
+  font-size: 0.9em;
 }
 
 .asignatura small {
   display: block;
-  font-size: 0.75em; /* Más pequeño */
+  font-size: 0.75em;
   color: #888;
-  margin-bottom: 8px;
+  margin-top: 2px;
 }
 
 /* === Estados === */
@@ -188,9 +189,9 @@ h2, h3 {
 
 /* === Nota mostrada === */
 .nota-mostrada {
-  font-size: 0.9em;
+  font-size: 0.75em;
   color: #4a002e;
-  margin-top: 8px;
+  margin-top: 4px;
 }
 
 /* === Botón invisible de nota === */
@@ -216,8 +217,9 @@ h2, h3 {
 
 /* === Medicina Interna (doble ancho) === */
 .asignatura.med-interna {
-  grid-column: span 2;
-  width: 296px !important;
+  grid-column: span 1 !important;
+  width: 144px !important;
+  min-height: 70px;
 }
 
 /* === Footer === */
@@ -232,4 +234,4 @@ h2, h3 {
   margin: 0;
   font-size: 1.2em;
   color: #ff66a3;
-}         
+}
