@@ -1,0 +1,452 @@
+{
+  "asignaturas": [
+    {
+      "id": 1,
+      "nombre": "Bases Científicas de la Medicina I",
+      "semestre": 1,
+      "area": "Formación Básica",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": null
+    },
+    {
+      "id": 2,
+      "nombre": "Biomatemáticas",
+      "semestre": 1,
+      "area": "Formación Básica",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": null
+    },
+    {
+      "id": 3,
+      "nombre": "Antropología",
+      "semestre": 1,
+      "area": "Formación General",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": null
+    },
+    {
+      "id": 4,
+      "nombre": "Introducción a la Medicina",
+      "semestre": 1,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": null
+    },
+    {
+      "id": 5,
+      "nombre": "Inglés Técnico para Medicina I",
+      "semestre": 1,
+      "area": "Formación General",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": null
+    },
+    {
+      "id": 6,
+      "nombre": "Electivo de Desarrollo del Pensamiento",
+      "semestre": 1,
+      "area": "Formación General",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": null
+    },
+    {
+      "id": 7,
+      "nombre": "Bases Científicas de la Medicina II",
+      "semestre": 2,
+      "area": "Formación Básica",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": 1
+    },
+    {
+      "id": 8,
+      "nombre": "Integrado de Morfología I",
+      "semestre": 2,
+      "area": "Formación Básica",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": 1
+    },
+    {
+      "id": 9,
+      "nombre": "Psicología de la Salud",
+      "semestre": 2,
+      "area": "Formación General",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": 3
+    },
+    {
+      "id": 10,
+      "nombre": "Recursos Básicos de Atención en Salud",
+      "semestre": 2,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": null
+    },
+    {
+      "id": 11,
+      "nombre": "Inglés Técnico para Medicina II",
+      "semestre": 2,
+      "area": "Formación General",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": 5
+    },
+    {
+      "id": 12,
+      "nombre": "Electivo de Comunicación",
+      "semestre": 2,
+      "area": "Formación General",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": null
+    },
+    {
+      "id": 13,
+      "nombre": "Bases Científicas de la Medicina III",
+      "semestre": 3,
+      "area": "Formación Básica",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": [7, 8]
+    },
+    {
+      "id": 14,
+      "nombre": "Genética Médica",
+      "semestre": 3,
+      "area": "Formación Básica",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": 7
+    },
+    {
+      "id": 15,
+      "nombre": "Integrado de Morfología II",
+      "semestre": 3,
+      "area": "Formación Básica",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": 8
+    },
+    {
+      "id": 16,
+      "nombre": "Microbiología",
+      "semestre": 3,
+      "area": "Formación Básica",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": [7, 8]
+    },
+    {
+      "id": 17,
+      "nombre": "Salud Pública y Epidemiología",
+      "semestre": 3,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": 2
+    },
+    {
+      "id": 18,
+      "nombre": "Electivo de Comunicación",
+      "semestre": 3,
+      "area": "Formación General",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": null
+    },
+    {
+      "id": 19,
+      "nombre": "Bases Científicas de la Medicina IV",
+      "semestre": 4,
+      "area": "Formación Básica",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": [13, 15]
+    },
+    {
+      "id": 20,
+      "nombre": "Neurociencias",
+      "semestre": 4,
+      "area": "Formación Básica",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": [13, 15]
+    },
+    {
+      "id": 21,
+      "nombre": "Patología y Anatomía Patológica",
+      "semestre": 4,
+      "area": "Formación Básica",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": [13, 15]
+    },
+    {
+      "id": 22,
+      "nombre": "Microbiología Aplicada a la Clínica",
+      "semestre": 4,
+      "area": "Formación Básica",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": 16
+    },
+    {
+      "id": 23,
+      "nombre": "Salud Comunitaria y Familiar I",
+      "semestre": 4,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": [9, 17]
+    },
+    {
+      "id": 24,
+      "nombre": "Fundamentos del Diagnóstico Clínico",
+      "semestre": 4,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Inicial",
+      "prerrequisito": [10, 13, 15]
+    },
+    {
+      "id": 25,
+      "nombre": "Fisiopatología",
+      "semestre": 5,
+      "area": "Formación Básica",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": [19, 20]
+    },
+    {
+      "id": 26,
+      "nombre": "Farmacología General",
+      "semestre": 5,
+      "area": "Formación Básica",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": [19, 22]
+    },
+    {
+      "id": 27,
+      "nombre": "Metodología de la Investigación y Bioestadística",
+      "semestre": 5,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": 17
+    },
+    {
+      "id": 28,
+      "nombre": "Salud Comunitaria y Familiar II",
+      "semestre": 5,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": 23
+    },
+    {
+      "id": 29,
+      "nombre": "Medicina Interna",
+      "semestre": 5,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": [19, 20, 21, 22, 24]
+    },
+    {
+      "id": 30,
+      "nombre": "Farmacología Aplicada a la Clínica",
+      "semestre": 6,
+      "area": "Formación Básica",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": 26
+    },
+    {
+      "id": 31,
+      "nombre": "Medicina Basada en la Evidencia",
+      "semestre": 6,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": 27
+    },
+    {
+      "id": 32,
+      "nombre": "Electivo de Ética",
+      "semestre": 6,
+      "area": "Formación General",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": null
+    },
+    {
+      "id": 33,
+      "nombre": "Salud Comunitaria y Familiar III",
+      "semestre": 7,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": 28
+    },
+    {
+      "id": 34,
+      "nombre": "Especialidades Quirúrgicas",
+      "semestre": 7,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": [25, 29, 30]
+    },
+    {
+      "id": 35,
+      "nombre": "Geriatría",
+      "semestre": 7,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": [25, 29, 30]
+    },
+    {
+      "id": 36,
+      "nombre": "Bioética",
+      "semestre": 7,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": null
+    },
+    {
+      "id": 37,
+      "nombre": "Salud Comunitaria y Familiar IV",
+      "semestre": 8,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": 33
+    },
+    {
+      "id": 38,
+      "nombre": "Pediatría y Cirugía Infantil",
+      "semestre": 8,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": [25, 29, 30]
+    },
+    {
+      "id": 39,
+      "nombre": "Oncología y Cuidados Paliativos",
+      "semestre": 8,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": [34, 35]
+    },
+    {
+      "id": 40,
+      "nombre": "Razonamiento e Integración Clínica",
+      "semestre": 8,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": [33, 34, 35, 36]
+    },
+    {
+      "id": 41,
+      "nombre": "Ginecología y Obstetricia",
+      "semestre": 9,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": [34, 38, 39]
+    },
+    {
+      "id": 42,
+      "nombre": "Salud Mental, Psicopatología y Psiquiatría",
+      "semestre": 9,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": 40
+    },
+    {
+      "id": 43,
+      "nombre": "Medicina Legal",
+      "semestre": 9,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": 40
+    },
+    {
+      "id": 44,
+      "nombre": "Electivo de Desarrollo Personal",
+      "semestre": 9,
+      "area": "Formación General",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": null
+    },
+    {
+      "id": 45,
+      "nombre": "Gestión y Administración en Salud",
+      "semestre": 10,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": 37
+    },
+    {
+      "id": 46,
+      "nombre": "Medicina Integrada y de Urgencias",
+      "semestre": 10,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": [34, 38, 39]
+    },
+    {
+      "id": 47,
+      "nombre": "Subespecialidades Médicas",
+      "semestre": 10,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": [41, 42]
+    },
+    {
+      "id": 48,
+      "nombre": "Electivo de Responsabilidad Social",
+      "semestre": 10,
+      "area": "Formación General",
+      "ciclo": "Ciclo Intermedio",
+      "prerrequisito": null
+    },
+    {
+      "id": 49,
+      "nombre": "Internado de Medicina Interna",
+      "semestre": 11,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Avanzado",
+      "prerrequisito": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]
+    },
+    {
+      "id": 50,
+      "nombre": "Internado de Especialidades Quirúrgicas",
+      "semestre": 11,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Avanzado",
+      "prerrequisito": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]
+    },
+    {
+      "id": 51,
+      "nombre": "Internado de Ginecología y Obstetricia",
+      "semestre": 11,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Avanzado",
+      "prerrequisito": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]
+    },
+    {
+      "id": 52,
+      "nombre": "Internado Electivo I",
+      "semestre": 11,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Avanzado",
+      "prerrequisito": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]
+    },
+    {
+      "id": 53,
+      "nombre": "Internado de Medicina Familiar y Rural",
+      "semestre": 13,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Avanzado",
+      "prerrequisito": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]
+    },
+    {
+      "id": 54,
+      "nombre": "Internado de Urgencia",
+      "semestre": 13,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Avanzado",
+      "prerrequisito": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]
+    },
+    {
+      "id": 55,
+      "nombre": "Internado de Pediatría y Cirugía Infantil",
+      "semestre": 13,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Avanzado",
+      "prerrequisito": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]
+    },
+    {
+      "id": 56,
+      "nombre": "Internado Electivo II",
+      "semestre": 13,
+      "area": "Formación Profesional",
+      "ciclo": "Ciclo Avanzado",
+      "prerrequisito": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]
+    }
+  ]
+}
