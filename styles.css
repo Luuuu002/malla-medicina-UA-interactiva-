@@ -81,24 +81,24 @@ button:hover {
   background-color: #e05590;
 }
 
-/* === Contenedor principal de la malla === */
+/* === Contenedor de malla === */
 #malla-container {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  gap: 10px;
+  gap: 2mm; /* Separación entre AÑOS distintos */
   overflow-x: auto;
   padding-bottom: 20px;
 }
 
 /* === Año académico === */
 .año {
-  min-width: 300px;
-  margin-top: 2mm;
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 1mm; /* Separación entre SEMESTRES del mismo año */
 }
 
-/* === Semestre (horizontal) === */
+/* === Semestre === */
 .semestre {
   background-color: #ffe5f0;
   border-radius: 10px;
@@ -129,7 +129,7 @@ button:hover {
   position: relative;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
-  width: 148px;
+  width: 146px;
   min-height: 90px;
 }
 
