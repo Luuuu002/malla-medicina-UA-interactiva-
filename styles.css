@@ -100,7 +100,7 @@ h2, h3 {
 .grid-año {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 6px; /* espacio reducido para acercar semestres */
   overflow-x: auto;
 }
 
@@ -108,15 +108,16 @@ h2, h3 {
 .semestre {
   background-color: #ffe5f0;
   border-radius: 10px;
-  padding: 15px;
+  padding: 10px; /* padding reducido para menos espacio */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  min-width: 150px;
+  min-width: 140px; /* cuadro semestre un poco más pequeño */
   flex-shrink: 0;
 }
 
 .semestre h3 {
   margin-top: 0;
   color: #d60073;
+  font-size: 1em;
 }
 
 /* === Grid de asignaturas === */
@@ -124,7 +125,7 @@ h2, h3 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 4px; /* espacio pequeño vertical entre ramos */
 }
 
 /* === Asignaturas === */
@@ -136,14 +137,20 @@ h2, h3 {
   position: relative;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
-  width: 144px;
+  width: 120px;  /* ancho reducido para que ramos sean menos anchos */
   font-size: 0.65em;
   text-align: center;
+  white-space: normal; /* permite múltiples líneas en el texto */
+  line-height: 1.2em;
+  word-break: break-word;
 }
 
 .asignatura h4 {
   margin: 0;
   font-size: 0.9em;
+  white-space: normal;
+  line-height: 1.2em;
+  word-break: break-word;
 }
 
 .asignatura small {
@@ -215,12 +222,14 @@ h2, h3 {
   display: block;
 }
 
-/* === Medicina Interna (doble ancho) === */
+/* === Medicina Interna (más ancha horizontalmente, no más alta) === */
 .asignatura.med-interna {
-  grid-column: span 1 !important;
-  width: 144px !important;
-  min-height: 70px;
+  width: 296px !important;
+  /* no se cambia alto, solo ancho */
 }
+
+/* === Internados (semestres 11-12 y 13-14) normales, sin ancho especial ni alto aumentado */
+/* No se aplica clase especial, así que usan el ancho base de 120px */
 
 /* === Footer === */
 #footer {
