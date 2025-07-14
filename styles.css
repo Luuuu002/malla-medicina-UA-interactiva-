@@ -5,6 +5,7 @@ body {
   color: #4a002e; /* Morado oscuro para texto principal */
   padding: 20px;
   margin: 0;
+  overflow-x: hidden; /* Eliminar scroll horizontal */
 }
 
 h1 {
@@ -27,14 +28,14 @@ h2, h3 {
   width: 80%;
   margin: 10px auto;
   height: 20px;
-  background-color: #ffb3d9; /* Rosado claro */
+  background-color: #ffd6ec; /* Ramo completado (barra vacía) */
   border-radius: 10px;
   overflow: hidden;
 }
 
 .progreso {
   height: 100%;
-  background-color: #ff66a3; /* Rosado fuerte */
+  background-color: #ffe6f0; /* Ramo disponible (barra llena) */
   width: 0%;
   transition: width 0.4s ease-in-out;
 }
@@ -42,9 +43,10 @@ h2, h3 {
 #porcentaje {
   font-size: 2em;
   font-weight: bold;
-  color: #cc0052; /* Rosado profundo */
+  color: #cc0052;
 }
 
+/* === Botón general === */
 button {
   background-color: #ff66a3;
   color: white;
@@ -61,29 +63,28 @@ button:hover {
   background-color: #e05590;
 }
 
-/* === Malla: Años horizontales y semestres verticales === */
+/* === Malla de asignaturas === */
 #malla-container {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Malla sin scroll horizontal */
   gap: 20px;
   padding-bottom: 20px;
   max-width: 100%;
+  overflow-x: hidden;
 }
 
-/* Contenedor de un año completo */
+/* Contenedor de un año */
 .año {
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  min-width: 300px;
   background-color: #fff5fa;
   border: 2px solid #ffb3d9;
   border-radius: 15px;
   padding: 10px;
 }
 
-/* Contenedor vertical de los semestres dentro del año */
+/* Contenedor de semestres */
 .grid-año {
   display: flex;
   flex-direction: column;
@@ -123,7 +124,7 @@ button:hover {
 
 /* === Estados de la asignatura === */
 .asignatura.completado {
-  background-color: #ffd6ec; /* Rosado más fuerte */
+  background-color: #ffd6ec;
   text-decoration: line-through;
   opacity: 0.6;
 }
@@ -136,7 +137,7 @@ button:hover {
 }
 
 .asignatura.disponible {
-  background-color: #ffe6f0; /* Rosado claro */
+  background-color: #ffe6f0;
   border-color: #ffb3d9;
 }
 
@@ -153,7 +154,25 @@ button:hover {
   margin-bottom: 8px;
 }
 
-.nota {
+/* Botón invisible en esquina inferior derecha */
+.boton-nota {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 25px;
+  height: 25px;
+  background: transparent;
+  border: none;
+  opacity: 0; /* invisible pero funcional */
+  cursor: pointer;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+/* Input de nota oculto por defecto */
+.asignatura .nota {
+  display: none;
+  margin-top: 8px;
   width: 100%;
   padding: 6px;
   box-sizing: border-box;
@@ -162,12 +181,24 @@ button:hover {
   font-size: 0.9em;
 }
 
-.nota-mostrada {
-  margin-top: 5px;
-  font-size: 0.9em;
-  color: #660033;
+/* Mostrar input cuando se activa */
+.asignatura.mostrando-nota .nota {
+  display: block;
 }
 
+/* Nota mostrada cuando ramo está completado */
+.asignatura .nota-mostrada {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  font-size: 1em;
+  font-weight: bold;
+  color: #4a002e;
+  text-decoration: none;
+  margin-top: 6px;
+}
+
+/* Botón dentro de asignatura */
 .asignatura button {
   margin-top: 8px;
   width: 100%;
