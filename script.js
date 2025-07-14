@@ -80,6 +80,11 @@ function renderMalla() {
         const div = document.createElement("div");
         div.className = "asignatura";
 
+        // No tachar Formación Básica y Profesional, se les pone clase 'formacion'
+        if (a.area.toLowerCase().includes("formación básica") || a.area.toLowerCase().includes("formación profesional")) {
+          div.classList.add("formacion");
+        }
+
         if (completado) div.classList.add("completado");
         else if (cursando) div.classList.add("cursando");
         else if (bloqueado) div.classList.add("bloqueado");
