@@ -154,10 +154,11 @@ button:hover {
 
 .asignatura.completado h4 {
   text-decoration: line-through;
+  background-color: #ff66a3; /* Rosado fuerte */
 }
 
 .asignatura.cursando {
-  background-color: #ffb3d9;
+  background-color: #ffb3d9; /* Rosado claro */
 }
 
 .asignatura.bloqueado {
@@ -185,7 +186,7 @@ button:hover {
 }
 
 /* === Botón adicional de nota (no usado por ahora) === */
-.nota-button-visible {
+.nota-button-no-visible {
   width: 100%;
   font-size: 0.9em;
   background-color: #ff66a3;
@@ -197,7 +198,7 @@ button:hover {
   cursor: pointer;
 }
 
-.nota-button-visible:hover {
+.nota-button-no-visible:hover {
   background-color: #e05590;
 }
 
@@ -215,7 +216,3 @@ button:hover {
   color: #ff66a3;
 }
 
-/* === Vista alternativa vertical (por si se necesitara más adelante) === */
-.grid-año.vertical .semestre {
-  flex-direction: column;
-}
