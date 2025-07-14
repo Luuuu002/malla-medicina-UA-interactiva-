@@ -1,73 +1,176 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const asignaturas = document.querySelectorAll(".asignatura");
+// === Manejador de la malla académica ===
 
-  asignaturas.forEach((asig) => {
-    // Detectar clic izquierdo
-    asig.addEventListener("click", (e) => {
-      if (e.button === 2) return; // Evitar si es clic derecho
+let asignaturas = [];
+let estados = {};
 
-      const rect = asig.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      const margenEsquina = 20; // Tamaño de la esquina inferior derecha
-      const esEsquinaInferiorDerecha =
-        x > rect.width - margenEsquina &&
-        y > rect.height - margenEsquina;
-
-      if (!esEsquinaInferiorDerecha) {
-        asig.classList.toggle("completado");
-      }
-    });
-
-    // Mostrar número al hacer clic derecho
-    asig.addEventListener("contextmenu", (e) => {
-      e.preventDefault();
-      const numContextual = asig.querySelector(".numero-contextual");
-      if (numContextual) {
-        numContextual.style.display = "block";
-        setTimeout(() => {
-          numContextual.style.display = "none";
-        }, 2000);
-      }
-    });
+// Cargar datos desde data.json
+fetch('data.json')
+  .then(res => res.json())
+  .then(data => {
+    asignaturas = data.asignaturas;
+    cargarEstadosGuardados();
+    renderMalla();
   });
 
-  // Botón resetear
-  const resetBtn = document.getElementById("reset-btn");
-  if (resetBtn) {
-    resetBtn.addEventListener("click", () => {
-      if (confirm("¿Estás seguro de reiniciar la malla?")) {
-        document.querySelectorAll(".asignatura").forEach((asig) => {
-          asig.classList.remove("completado");
-          const inputNota = asig.querySelector(".nota");
-          if (inputNota) inputNota.value = "";
-          const numeroContextual = asig.querySelector(".numero-contextual");
-          if (numeroContextual) numeroContextual.style.display = "none";
-        });
-        actualizarProgreso();
-      }
-    });
+// Cargar estados guardados desde localStorage
+function cargarEstadosGuardados() {
+  const guardado = localStorage.getItem("estadoMalla");
+  if (guardado) {
+    estados = JSON.parse(guardado);
+  } else {
+    asignaturas.forEach(a => estados[a.id] = { completado: false, nota: "" });
   }
+}
 
-  // Actualizar barra de progreso
-  function actualizarProgreso() {
-    const total = document.querySelectorAll(".asignatura").length;
-    const completadas = document.querySelectorAll(".asignatura.completado").length;
-    const porcentaje = Math.round((completadas / total) * 100);
-    const barra = document.querySelector(".progreso");
-    const textoPorcentaje = document.getElementById("porcentaje");
+// Guardar estado en localStorage
+function guardarEstado() {
+  localStorage.setItem("estadoMalla", JSON.stringify(estados));
+  actualizarAvance();
+}
 
-    if (barra) barra.style.width = `${porcentaje}%`;
-    if (textoPorcentaje) textoPorcentaje.textContent = `${porcentaje}%`;
-  }
+// Renderizar toda la malla
+function renderMalla() {
+  const container = document.getElementById("malla-container");
+  container.innerHTML = "";
 
-  // Escuchar cambios en clases para actualizar progreso
-  const observer = new MutationObserver(actualizarProgreso);
-  document.querySelectorAll(".asignatura").forEach((asig) => {
-    observer.observe(asig, { attributes: true, attributeFilter: ["class"] });
+  // Agrupar asignaturas por semestre
+  const semestres = {};
+  asignaturas.forEach(a => {
+    if (!semestres[a.semestre]) semestres[a.semestre] = [];
+    semestres[a.semestre].push(a);
   });
 
-  // Inicializar progreso al cargar
-  actualizarProgreso();
-});
+  // Agrupar semestres por años (cada 2 semestres)
+  const años = {};
+  Object.keys(semestres).forEach(sem => {
+    const año = Math.ceil(sem / 2);
+    if (!años[año]) años[año] = [];
+    años[año].push({ semestre: sem, asignaturas: semestres[sem] });
+  });
+
+  Object.keys(años).forEach(año => {
+    const divAño = document.createElement("div");
+    divAño.className = "año";
+    divAño.innerHTML = `<h2>AÑO ${año}</h2>`;
+
+    const gridAño = document.createElement("div");
+    gridAño.className = "grid-año";
+
+    años[año].forEach(grupo => {
+      const divSemestre = document.createElement("div");
+      divSemestre.className = "semestre";
+      divSemestre.innerHTML = `<h3>Semestre ${grupo.semestre}</h3>`;
+
+      const grid = document.createElement("div");
+      grid.className = "grid-asignaturas";
+
+      grupo.asignaturas.forEach(a => {
+        const bloqueado = tienePrerrequisitoNoCompletado(a);
+        const completado = !!estados[a.id]?.completado;
+
+        const div = document.createElement("div");
+        div.className = `asignatura${completado ? ' completado' : (bloqueado ? ' bloqueado' : '')}`;
+        div.innerHTML = `
+          <h4>${a.nombre}</h4>
+          <small>${a.area}</small>
+          ${completado && estados[a.id]?.nota 
+            ? `<p class="nota-mostrada">Nota: <strong>${estados[a.id].nota}</strong></p>` 
+            : ''}
+          ${!completado ? 
+            `<input class="nota" type="text" placeholder="Ingresa tu nota" value="${estados[a.id]?.nota || ''}">`
+            : ''
+          }
+        `;
+
+        // Solo agregar evento si no está bloqueado ni completado
+        if (!bloqueado && !completado) {
+          div.style.cursor = "pointer";
+          div.onclick = (e) => {
+            if (e.target.classList.contains("nota")) return;
+
+            const rect = div.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+
+            const esquinaAncho = rect.width * 0.25;
+            const esquinaAlto = rect.height * 0.25;
+
+            if (clickX > rect.width - esquinaAncho && clickY > rect.height - esquinaAlto) {
+              return; // Clic en esquina inferior derecha: no marcar
+            }
+
+            const notaInput = div.querySelector('.nota');
+            const nota = notaInput ? notaInput.value.trim() : "";
+
+            if (!nota || isNaN(nota) || nota < 1 || nota > 7) {
+              alert("Debes ingresar una nota válida entre 1.0 y 7.0 antes de marcar como completado.");
+              return;
+            }
+
+            estados[a.id].nota = nota;
+            estados[a.id].completado = true;
+            guardarEstado();
+            renderMalla();
+          };
+        }
+
+        // Guardar nota al escribir, sin marcar como completado
+        if (!completado) {
+          setTimeout(() => {
+            const input = div.querySelector('.nota');
+            if (input) {
+              input.onchange = (ev) => {
+                estados[a.id].nota = ev.target.value;
+                guardarEstado();
+              };
+            }
+          }, 0);
+        }
+
+        if (bloqueado) {
+          div.title = "Esta asignatura está bloqueada por prerrequisitos no cumplidos.";
+        }
+
+        grid.appendChild(div);
+      });
+
+      divSemestre.appendChild(grid);
+      gridAño.appendChild(divSemestre);
+    });
+
+    divAño.appendChild(gridAño);
+    container.appendChild(divAño);
+  });
+
+  actualizarAvance();
+}
+
+// Verifica si los prerrequisitos están cumplidos
+function tienePrerrequisitoNoCompletado(asignatura) {
+  if (!asignatura.prerrequisito) return false;
+
+  if (typeof asignatura.prerrequisito === 'number') {
+    return !estados[asignatura.prerrequisito]?.completado;
+  }
+
+  return asignatura.prerrequisito.some(id => !estados[id]?.completado);
+}
+
+// Actualiza la barra de progreso
+function actualizarAvance() {
+  const total = asignaturas.length;
+  const completados = asignaturas.filter(a => estados[a.id]?.completado).length;
+  const porcentaje = Math.round((completados / total) * 100);
+
+  document.querySelector(".progreso").style.width = `${porcentaje}%`;
+  document.getElementById("porcentaje").innerText = `${porcentaje}%`;
+}
+
+// Resetea toda la malla
+function resetearMalla() {
+  if (confirm("¿Estás segura que quieres resetear toda la malla?")) {
+    asignaturas.forEach(a => estados[a.id] = { completado: false, nota: "" });
+    localStorage.removeItem("estadoMalla");
+    renderMalla();
+  }
+}
