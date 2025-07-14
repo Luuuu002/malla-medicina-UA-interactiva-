@@ -24,7 +24,7 @@ h3 {
   margin: 5px 0;
 }
 
-/* === Contenedor horizontal de años === */
+/* === Contenedor de años en fila horizontal === */
 #malla-container {
   display: flex;
   flex-direction: row;
@@ -36,31 +36,48 @@ h3 {
 .año {
   display: flex;
   flex-direction: column;
-  min-width: 280px;
+  min-width: 260px;
 }
 
-/* === Contenedor horizontal de semestres === */
+/* === Grupo de semestres en fila horizontal === */
 .grid-año {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 12px;
 }
 
-/* === Semestre individual === */
+/* === Grupo vertical especial para años 6 y 7 === */
+.grid-año.vertical {
+  flex-direction: column;
+}
+
+/* === Cada semestre === */
 .semestre {
   background-color: transparent;
   padding: 10px 0;
-  min-width: 240px;
+  min-width: 200px;
 }
 
-/* === Grid de asignaturas === */
+/* === Título semestre === */
+.semestre h3 {
+  margin: 0 0 8px 0;
+  font-size: 1em;
+  color: #cc0052;
+}
+
+/* === Grid de ramos normal (horizontal semestre) === */
 .grid-asignaturas {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 10px;
 }
 
-/* === Asignatura (ramo) === */
+/* === Grid de ramos agrupado (años 6 y 7) === */
+.semestre[data-grupo] .grid-asignaturas {
+  flex-direction: column;
+}
+
+/* === Estilo de ramo === */
 .asignatura {
   background-color: #ffffff;
   border: 1px solid #ffb3d9;
@@ -68,23 +85,22 @@ h3 {
   border-radius: 6px;
   position: relative;
   font-size: 0.8em;
-  height: 100px;         /* más alto */
-  width: 100%;
+  height: 120px; /* Un poco más alto para mayor visibilidad */
+  width: 165px; /* Ajustado a 165px para todos los ramos */
   box-sizing: border-box;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s;
   overflow: hidden;
 }
 
-/* Estado: cursando */
+/* === Estados visuales === */
 .asignatura.cursando {
   background-color: #ffb3d9;
   border-color: #ffb3d9;
-  cursor: pointer;
   color: #4a002e;
+  cursor: pointer;
 }
 
-/* Estado: completado */
 .asignatura.completado {
   background-color: #ff66a3;
   border-color: #ff66a3;
@@ -99,7 +115,6 @@ h3 {
   color: white;
 }
 
-/* Estado: bloqueado */
 .asignatura.bloqueado {
   background-color: #ffe5f0;
   border-color: #ffe5f0;
@@ -108,46 +123,54 @@ h3 {
   color: #a06080;
 }
 
-/* Título de asignatura */
+/* === Texto dentro del ramo === */
 .asignatura h4 {
   margin: 0 0 4px;
   font-weight: bold;
 }
 
-/* Área de formación */
 .asignatura small {
   display: block;
   font-size: 0.75em;
   margin-bottom: 4px;
-  color: #555;
+  color: #888;
 }
 
-/* Nota mostrada (cuando completado) */
-.nota-mostrada {
-  font-size: 1em;
-  font-weight: bold;
-  text-align: center;
-  margin-top: 4px;
-}
-
-/* Input de nota (oculto inicialmente) */
+/* === Notas === */
 .nota {
-  display: none;
-  position: absolute;
-  bottom: 4px;
-  right: 4px;
-  width: 40px;
-  font-size: 0.75em;
-  padding: 2px;
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
   border: 1px solid #ccc;
-  border-radius: 3px;
-  background-color: white;
-  z-index: 10;
+  border-radius: 4px;
+  font-size: 0.9em;
 }
 
-/* Mostrar input al hacer clic en esquina */
-.asignatura.mostrar-nota .nota {
+.nota-mostrada {
+  margin-top: 5px;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+/* === Botón de nota === */
+button {
+  display: none; /* Ocultar botón por defecto */
+  background-color: #ff66a3;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* === Aparición del botón de nota al hacer clic en la esquina inferior derecha === */
+.asignatura .nota-button-visible {
   display: block;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
 
 /* === Barra de progreso === */
@@ -178,17 +201,20 @@ h3 {
   color: #cc0052;
 }
 
-/* === Botón general === */
-button {
-  background-color: #ff66a3;
-  color: white;
-  border: none;
-  padding: 5px 12px;
-  cursor: pointer;
-  border-radius: 4px;
+/* === Botón resetear === */
+button.reset {
   font-size: 0.8em;
+  padding: 6px 12px;
+  margin-top: 20px;
+  cursor: pointer;
+  background-color: #ffcccb;
+  border-radius: 5px;
+  border: none;
+  color: #4a002e;
+  transition: background-color 0.3s;
 }
 
-button:hover {
-  background-color: #e05590;
+button.reset:hover {
+  background-color: #ff99a1;
 }
+
