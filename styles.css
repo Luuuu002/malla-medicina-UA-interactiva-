@@ -199,3 +199,21 @@ button:hover {
   margin-top: 6px;
   text-decoration: none;
 }
+.creador {
+  text-align: center;
+  font-size: 0.9em;
+  color: #cc0052;
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
+
+.corazon {
+  animation: brillo 1.5s infinite alternate;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+@keyframes brillo {
+  0% { filter: drop-shadow(0 0 2px #ff66a3); }
+  100% { filter: drop-shadow(0 0 6px #ff66a3); }
+}
