@@ -127,14 +127,14 @@ h2, h3 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
 }
 
 /* === Asignaturas === */
 .asignatura {
   background-color: #ffffff;
   border: 1px solid #ffcccc;
-  padding: 6px;
+  padding: 5px;
   border-radius: 8px;
   position: relative;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -268,12 +268,12 @@ h2, h3 {
 /* === Asignaturas de sexto y séptimo === */
 .año.año6 .grid-año,
 .año.año7 .grid-año {
-  max-width: 1140px;
+  max-width: 110px;
 }
 
 .año.año6 .asignatura,
 .año.año7 .asignatura {
-  width: 100px !important;
+  width: 110px !important;
 }
 
 /* === Eliminar Medicina Interna fuera del contenedor === */
