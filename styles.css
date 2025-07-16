@@ -11,12 +11,10 @@ h1 {
   text-align: center;
   color: #ff66a3;
   margin-bottom: 10px;
-  /* El título principal se mantiene igual */
 }
 
 h2, h3 {
   color: #cc0052;
-  font-size: 0.85em; /* Texto de años/semestres más pequeño */
 }
 
 /* === Porcentaje de avance centrado === */
@@ -32,7 +30,7 @@ h2, h3 {
   gap: 8px;
   color: #cc0052;
   font-weight: bold;
-  font-size: 1.1em; /* No reducido */
+  font-size: 1.1em;
   margin-bottom: 10px;
 }
 
@@ -82,19 +80,18 @@ h2, h3 {
 #malla-container {
   max-width: 1100px;
   margin: 0 auto;
-  font-size: 0.9em; /* Reduce el tamaño general */
 }
 
 /* === Año académico === */
 .año {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .año > h2 {
-  margin-bottom: 6px;
+  margin-bottom: 10px;
   color: #cc0052;
   font-weight: bold;
-  font-size: 0.85em; /* Más pequeño */
+  font-size: 1em;
   text-align: left;
   padding-left: 8px;
 }
@@ -103,7 +100,7 @@ h2, h3 {
 .grid-año {
   display: flex;
   flex-direction: row;
-  gap: 4px;
+  gap: 6px;
   overflow-x: auto;
   position: relative;
 }
@@ -112,17 +109,18 @@ h2, h3 {
 .semestre {
   background-color: #ffe5f0;
   border-radius: 10px;
-  padding: 6px;
+  padding: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  min-width: 110px;
-  max-width: 115px;
+  min-width: 120px;
+  max-width: 125px;
+  flex-shrink: 0;
 }
 
-/* === Semestres 6º y 7º año: más estrechos para internados === */
+/* === Semestres 6º y 7º año un poco más anchos === */
 .año[data-año="6"] .semestre,
 .año[data-año="7"] .semestre {
-  min-width: 100px;
-  max-width: 105px;
+  min-width: 122px;
+  max-width: 127px;
 }
 
 /* === Grid de asignaturas === */
@@ -130,21 +128,21 @@ h2, h3 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
 }
 
 /* === Asignaturas estándar === */
 .asignatura {
   background-color: #ffffff;
   border: 1px solid #ffcccc;
-  padding: 4px;
-  border-radius: 6px;
+  padding: 6px;
+  border-radius: 8px;
   position: relative;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
   width: 100%;
-  max-width: 100px;
-  font-size: 0.55em;
+  max-width: 115px;
+  font-size: 0.63em;
   text-align: center;
   white-space: normal;
   line-height: 1.2em;
@@ -154,12 +152,14 @@ h2, h3 {
 .asignatura h4 {
   margin: 0;
   font-size: 1em;
+  white-space: normal;
   line-height: 1.2em;
+  word-break: break-word;
 }
 
 .asignatura small {
   display: block;
-  font-size: 0.7em;
+  font-size: 0.75em;
   color: #888;
   margin-top: 2px;
 }
@@ -191,16 +191,16 @@ h2, h3 {
 /* === Input nota === */
 .nota {
   width: 100%;
-  padding: 4px;
+  padding: 6px;
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 0.75em;
+  font-size: 0.9em;
 }
 
 /* === Nota mostrada === */
 .nota-mostrada {
-  font-size: 0.65em;
+  font-size: 0.75em;
   color: #4a002e;
   margin-top: 4px;
 }
@@ -208,10 +208,10 @@ h2, h3 {
 /* === Botón invisible de nota === */
 .nota-button {
   position: absolute;
-  bottom: 4px;
-  right: 4px;
-  width: 14px;
-  height: 14px;
+  bottom: 6px;
+  right: 6px;
+  width: 16px;
+  height: 16px;
   background-color: transparent;
   cursor: pointer;
   border-radius: 50%;
@@ -226,63 +226,47 @@ h2, h3 {
   display: block;
 }
 
-/* === Medicina Interna entre semestres 5 y 6 del tercer año === */
-.med-interna-wrapper {
-  position: absolute;
-  left: 50%;
-  transform: translateX(calc(-50% + -3px)); /* Mueve 3 px a la derecha */
-  top: 60px;
-  z-index: 10;
-}
-
-.asignatura.med-interna {
-  width: 210px !important;
-  font-size: 0.55em;
-  padding: 4px;
-}
-
-/* === Internados más verticales, ajustados al contenedor === */
+/* === Internados más altos y angostos === */
 .asignatura.internado {
-  width: 80px !important; /* Más angosto */
-  font-size: 0.55em;
+  width: 95px !important;
+  min-height: 140px;
+  font-size: 0.6em;
+  word-break: break-word;
   white-space: normal;
+  text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+/* === Medicina Interna centrada entre semestres === */
+.med-interna-wrapper {
+  position: absolute;
+  left: 50.3%;
+  transform: translateX(-50%);
+  top: 50px; /* ajustar si es necesario */
+  z-index: 10;
+}
+
+.asignatura.med-interna {
+  width: 230px !important;
+  font-size: 0.7em;
   text-align: center;
+  white-space: normal;
   word-break: break-word;
 }
 
 /* === Footer === */
 #footer {
   text-align: center;
-  margin-top: 16px;
-  font-size: 0.8em;
+  margin-top: 20px;
+  font-size: 0.9em;
   color: #888;
 }
 
 #footer h3 {
   margin: 0;
-  font-size: 1.1em;
+  font-size: 1.2em;
   color: #ff66a3;
-}
-
-/* === Errores al ingresar nota === */
-.nota-error {
-  display: none;
-  color: red;
-  font-size: 0.65em;
-  margin-top: 4px;
-}
-
-.nota-error.error-activo {
-  display: block;
-}
-
-/* === Ocultar tooltips emergentes no deseados === */
-.nota-button:hover::after,
-.nota-button:focus::after {
-  display: none !important;
-  content: none !important;
 }
