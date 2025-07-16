@@ -224,12 +224,12 @@ h2, h3 {
   display: block;
 }
 
-/* === Medicina Interna centrada, más ancha y 6mm a la derecha === */
+/* === Medicina Interna centrada, más ancha y 9mm a la derecha === */
 .asignatura.med-interna {
   width: 230px !important;
   min-height: auto;
   margin: auto;
-  margin-left: 6mm; /* Desplazada 6mm a la derecha */
+  margin-left: 9mm; /* Desplazada 9mm a la derecha */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -239,7 +239,7 @@ h2, h3 {
 
 /* === Internados más verticales, menos anchos === */
 .asignatura.internado {
-  width: 100px !important;
+  width: 110px !important;
   min-height: 130px;
   font-size: 0.65em;
   white-space: normal;
