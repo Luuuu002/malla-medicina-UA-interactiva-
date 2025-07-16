@@ -102,9 +102,10 @@ h2, h3 {
   flex-direction: row;
   gap: 6px;
   overflow-x: auto;
+  position: relative;
 }
 
-/* === Semestre === */
+/* === Semestre general === */
 .semestre {
   background-color: #ffe5f0;
   border-radius: 10px;
@@ -115,11 +116,11 @@ h2, h3 {
   max-width: 140px;
 }
 
-/* === Semestre de 6º y 7º año ligeramente más grande === */
+/* === Semestres 6º y 7º año: más estrechos para internados === */
 .año[data-año="6"] .semestre,
 .año[data-año="7"] .semestre {
-  min-width: 150px;
-  max-width: 160px;
+  min-width: 120px;
+  max-width: 125px;
 }
 
 /* === Grid de asignaturas === */
@@ -130,7 +131,7 @@ h2, h3 {
   gap: 4px;
 }
 
-/* === Asignaturas === */
+/* === Asignaturas estándar === */
 .asignatura {
   background-color: #ffffff;
   border: 1px solid #ffcccc;
@@ -139,7 +140,8 @@ h2, h3 {
   position: relative;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
-  width: 110px;
+  width: 100%;
+  max-width: 120px;
   font-size: 0.65em;
   text-align: center;
   white-space: normal;
@@ -224,12 +226,19 @@ h2, h3 {
   display: block;
 }
 
-/* === Medicina Interna centrada y 2mm hacia la derecha */
+/* === Medicina Interna entre semestres 5 y 6 del tercer año === */
+.med-interna-wrapper {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 60px; /* ajusta según altura de tus semestres */
+  z-index: 10;
+}
+
 .asignatura.med-interna {
   width: 230px !important;
   min-height: auto;
   margin: auto;
-  margin-left: 2mm;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -237,9 +246,9 @@ h2, h3 {
   text-align: center;
 }
 
-/* === Internados más verticales, menos anchos */
+/* === Internados más verticales, ajustados al contenedor === */
 .asignatura.internado {
-  width: 100px !important;
+  width: 90px !important;
   min-height: 130px;
   font-size: 0.65em;
   white-space: normal;
@@ -265,7 +274,7 @@ h2, h3 {
   color: #ff66a3;
 }
 
-/* === Mensaje de error de nota personalizado === */
+/* === Errores al ingresar nota === */
 .nota-error {
   display: none;
   color: red;
@@ -277,7 +286,7 @@ h2, h3 {
   display: block;
 }
 
-/* === Eliminar tooltips o mensajes emergentes por hover/clic === */
+/* === Ocultar tooltips emergentes no deseados === */
 .nota-button:hover::after,
 .nota-button:focus::after {
   display: none !important;
