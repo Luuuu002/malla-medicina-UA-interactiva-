@@ -13,8 +13,11 @@ h1 {
   margin-bottom: 10px;
 }
 
+/* === Títulos de año centrados === */
 h2, h3 {
   color: #cc0052;
+  text-align: center; /* ahora centrado */
+  font-size: 1em;
 }
 
 /* === Porcentaje de avance centrado === */
@@ -76,27 +79,12 @@ h2, h3 {
   background-color: #e05590;
 }
 
-/* === Contenedor de malla === */
+/* === Contenedor general y grid de malla === */
 #malla-container {
   max-width: 1100px;
   margin: 0 auto;
 }
 
-/* === Año académico === */
-.año {
-  margin-bottom: 20px;
-}
-
-.año > h2 {
-  margin-bottom: 10px;
-  color: #cc0052;
-  font-weight: bold;
-  font-size: 1em;
-  text-align: left;
-  padding-left: 8px;
-}
-
-/* === Grid horizontal de semestres por año === */
 .grid-año {
   display: flex;
   flex-direction: row;
@@ -105,12 +93,12 @@ h2, h3 {
   position: relative;
 }
 
-/* === Semestre general === */
+/* === Contenedores de semestre ajustados === */
 .semestre {
   background-color: #ffe5f0;
   border-radius: 10px;
   padding: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
   min-width: 120px;
   max-width: 125px;
   flex-shrink: 0;
@@ -123,12 +111,11 @@ h2, h3 {
   max-width: 127px;
 }
 
-/* === Grid de asignaturas === */
-.grid-asignaturas {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
+/* === Título de semestre más pequeño y compacto === */
+.semestre > h3 {
+  font-size: 0.9em;
+  white-space: nowrap;
+  margin: 0 0 8px 0;
 }
 
 /* === Asignaturas estándar === */
@@ -138,11 +125,11 @@ h2, h3 {
   padding: 6px;
   border-radius: 8px;
   position: relative;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   transition: background-color 0.3s ease;
   width: 100%;
   max-width: 115px;
-  font-size: 0.63em;
+  font-size: 0.63em; /* uniforme */
   text-align: center;
   white-space: normal;
   line-height: 1.2em;
@@ -152,7 +139,6 @@ h2, h3 {
 .asignatura h4 {
   margin: 0;
   font-size: 1em;
-  white-space: normal;
   line-height: 1.2em;
   word-break: break-word;
 }
@@ -164,17 +150,15 @@ h2, h3 {
   margin-top: 2px;
 }
 
-/* === Estados === */
+/* === Estados de asignaturas === */
 .asignatura.completado {
   background-color: #ff66a3;
-  text-decoration: none;
   opacity: 0.6;
   cursor: default;
 }
 
 .asignatura.completado h4 {
   text-decoration: line-through;
-  background-color: transparent;
 }
 
 .asignatura.cursando {
@@ -188,7 +172,7 @@ h2, h3 {
   cursor: not-allowed;
 }
 
-/* === Input nota === */
+/* === Input de notas === */
 .nota {
   width: 100%;
   padding: 6px;
@@ -198,14 +182,13 @@ h2, h3 {
   font-size: 0.9em;
 }
 
-/* === Nota mostrada === */
 .nota-mostrada {
   font-size: 0.75em;
   color: #4a002e;
   margin-top: 4px;
 }
 
-/* === Botón invisible de nota === */
+/* === Botón para mostrar nota === */
 .nota-button {
   position: absolute;
   bottom: 6px;
@@ -217,7 +200,13 @@ h2, h3 {
   border-radius: 50%;
 }
 
-/* === Mostrar/ocultar sección nota === */
+.nota-button:hover::after,
+.nota-button:focus::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* === Sección de nota (oculta/visible) === */
 .nota-section {
   display: none;
 }
@@ -226,7 +215,19 @@ h2, h3 {
   display: block;
 }
 
-/* === Internados más altos y angostos === */
+/* === Mensajes de error de nota solo si es necesario === */
+.nota-error {
+  display: none;
+  color: red;
+  font-size: 0.7em;
+  margin-top: 4px;
+}
+
+.nota-error.error-activo {
+  display: block;
+}
+
+/* === Internados: más altos, angostos, multi-línea === */
 .asignatura.internado {
   width: 95px !important;
   min-height: 140px;
@@ -238,14 +239,15 @@ h2, h3 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  line-height: 1.2em;
 }
 
-/* === Medicina Interna centrada entre semestres === */
+/* === Medicina Interna superpuesta entre semestres === */
 .med-interna-wrapper {
   position: absolute;
   left: 50.3%;
   transform: translateX(-50%);
-  top: 50px; /* ajustar si es necesario */
+  top: 50px; /* ajusta según tu layout vertical */
   z-index: 10;
 }
 
