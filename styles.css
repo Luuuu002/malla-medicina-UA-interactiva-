@@ -13,19 +13,8 @@ h1 {
   margin-bottom: 10px;
 }
 
-/* === Títulos centrados === */
-h2 {
+h2, h3 {
   color: #cc0052;
-  text-align: center;
-  font-size: 1em;
-}
-
-h3 {
-  color: #cc0052;
-  font-size: 0.9em; /* más pequeño */
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 8px;
 }
 
 /* === Porcentaje de avance centrado === */
@@ -87,35 +76,50 @@ h3 {
   background-color: #e05590;
 }
 
-/* === Contenedor malla === */
+/* === Contenedor de malla === */
 #malla-container {
   max-width: 1100px;
   margin: 0 auto;
 }
 
+/* === Año académico === */
+.año {
+  margin-bottom: 20px;
+}
+
+.año > h2 {
+  margin-bottom: 10px;
+  color: #cc0052;
+  font-weight: bold;
+  font-size: 1em;
+  text-align: left;
+  padding-left: 8px;
+}
+
+/* === Grid horizontal de semestres por año === */
 .grid-año {
   display: flex;
   flex-direction: row;
   gap: 6px;
   overflow-x: auto;
-  position: relative;
 }
 
+/* === Semestre === */
 .semestre {
   background-color: #ffe5f0;
   border-radius: 10px;
-  padding: 8px;
+  padding: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  min-width: 110px;
-  max-width: 115px;
+  min-width: 130px;
   flex-shrink: 0;
+  max-width: 140px;
 }
 
-/* === Semestres 6º y 7º año un poco más anchos === */
-.año[data-año="6"] .semestre,
-.año[data-año="7"] .semestre {
-  min-width: 112px;
-  max-width: 118px;
+.semestre h3 {
+  margin-top: 0;
+  color: #d60073;
+  font-size: 1em;
+  white-space: nowrap;
 }
 
 /* === Grid de asignaturas === */
@@ -126,18 +130,17 @@ h3 {
   gap: 4px;
 }
 
-/* === Asignaturas estándar === */
+/* === Asignaturas === */
 .asignatura {
   background-color: #ffffff;
   border: 1px solid #ffcccc;
-  padding: 5px;
+  padding: 6px;
   border-radius: 8px;
   position: relative;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
-  width: 100%;
-  max-width: 105px;
-  font-size: 0.6em;
+  width: 110px;
+  font-size: 0.65em;
   text-align: center;
   white-space: normal;
   line-height: 1.2em;
@@ -147,7 +150,9 @@ h3 {
 .asignatura h4 {
   margin: 0;
   font-size: 1em;
+  white-space: normal;
   line-height: 1.2em;
+  word-break: break-word;
 }
 
 .asignatura small {
@@ -160,12 +165,14 @@ h3 {
 /* === Estados === */
 .asignatura.completado {
   background-color: #ff66a3;
+  text-decoration: none;
   opacity: 0.6;
   cursor: default;
 }
 
 .asignatura.completado h4 {
   text-decoration: line-through;
+  background-color: transparent;
 }
 
 .asignatura.cursando {
@@ -179,54 +186,24 @@ h3 {
   cursor: not-allowed;
 }
 
-/* === Internados === */
-.asignatura.internado {
-  width: 90px !important;
-  min-height: 140px;
-  font-size: 0.6em;
-  word-break: break-word;
-  white-space: normal;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  line-height: 1.2em;
-}
-
-/* === Medicina Interna centrada entre semestres === */
-.med-interna-wrapper {
-  position: absolute;
-  left: 50.3%;
-  transform: translateX(-50%);
-  top: 60px;
-  z-index: 10;
-}
-
-.asignatura.med-interna {
-  width: 230px !important;
-  font-size: 0.7em;
-  text-align: center;
-  white-space: normal;
-  word-break: break-word;
-}
-
 /* === Input nota === */
 .nota {
   width: 100%;
-  padding: 5px;
+  padding: 6px;
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 0.9em;
 }
 
+/* === Nota mostrada === */
 .nota-mostrada {
   font-size: 0.75em;
   color: #4a002e;
   margin-top: 4px;
 }
 
+/* === Botón invisible de nota === */
 .nota-button {
   position: absolute;
   bottom: 6px;
@@ -238,6 +215,7 @@ h3 {
   border-radius: 50%;
 }
 
+/* === Mostrar/ocultar sección nota === */
 .nota-section {
   display: none;
 }
@@ -246,16 +224,31 @@ h3 {
   display: block;
 }
 
-/* === Errores de nota solo si corresponde === */
-.nota-error {
-  display: none;
-  color: red;
-  font-size: 0.7em;
-  margin-top: 4px;
+/* === Medicina Interna centrada, más ancha y 3mm a la derecha === */
+.asignatura.med-interna {
+  width: 230px !important;
+  min-height: auto;
+  margin: auto;
+  margin-left: 3mm; /* Desplazada 3mm a la derecha */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
-.nota-error.error-activo {
-  display: block;
+/* === Internados más verticales, menos anchos === */
+.asignatura.internado {
+  width: 100px !important;
+  min-height: 130px;
+  font-size: 0.65em;
+  white-space: normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  word-break: break-word;
 }
 
 /* === Footer === */
@@ -270,4 +263,10 @@ h3 {
   margin: 0;
   font-size: 1.2em;
   color: #ff66a3;
+}
+
+/* === Asignaturas de sexto y séptimo deben mantenerse pequeñas === */
+.año.año6 .asignatura,
+.año.año7 .asignatura {
+  width: 110px !important; /* mismo tamaño que el resto */
 }
