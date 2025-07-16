@@ -240,7 +240,7 @@ h2, h3 {
 /* === Internados más verticales, menos anchos === */
 .asignatura.internado {
   width: 110px !important;
-  min-height: 130px;
+  min-height: 150px;
   font-size: 0.65em;
   white-space: normal;
   display: flex;
