@@ -93,7 +93,7 @@ h2, h3 {
   font-weight: bold;
   font-size: 1em;
   text-align: left;
-  padding-left: 8px;
+  padding-left: 4mm; /* centrado un poco más */
 }
 
 /* === Grid horizontal de semestres por año === */
@@ -265,8 +265,18 @@ h2, h3 {
   color: #ff66a3;
 }
 
-/* === Asignaturas de sexto y séptimo  === */
+/* === Asignaturas de sexto y séptimo === */
+.año.año6 .grid-año,
+.año.año7 .grid-año {
+  max-width: 1140px;
+}
+
 .año.año6 .asignatura,
 .año.año7 .asignatura {
-  width: 110px !important; /* mismo tamaño que el resto */
+  width: 100px !important;
+}
+
+/* === Eliminar Medicina Interna fuera del contenedor === */
+body > .asignatura.med-interna:not(:within(#malla-container)) {
+  display: none !important;
 }
