@@ -115,11 +115,11 @@ h2, h3 {
   max-width: 140px;
 }
 
-.semestre h3 {
-  margin-top: 0;
-  color: #d60073;
-  font-size: 1em;
-  white-space: nowrap;
+/* === Semestre de 6º y 7º año ligeramente más grande === */
+.año[data-año="6"] .semestre,
+.año[data-año="7"] .semestre {
+  min-width: 150px;
+  max-width: 160px;
 }
 
 /* === Grid de asignaturas === */
@@ -224,11 +224,12 @@ h2, h3 {
   display: block;
 }
 
-/* === Medicina Interna centrada y más ancha */
+/* === Medicina Interna centrada y 2mm hacia la derecha */
 .asignatura.med-interna {
   width: 230px !important;
   min-height: auto;
-  margin: auto;          /* centrado horizontal */
+  margin: auto;
+  margin-left: 2mm;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -238,8 +239,8 @@ h2, h3 {
 
 /* === Internados más verticales, menos anchos */
 .asignatura.internado {
-  width: 100px !important;   /* menos ancho */
-  min-height: 130px;         /* más alto */
+  width: 100px !important;
+  min-height: 130px;
   font-size: 0.65em;
   white-space: normal;
   display: flex;
@@ -262,4 +263,23 @@ h2, h3 {
   margin: 0;
   font-size: 1.2em;
   color: #ff66a3;
+}
+
+/* === Mensaje de error de nota personalizado === */
+.nota-error {
+  display: none;
+  color: red;
+  font-size: 0.7em;
+  margin-top: 4px;
+}
+
+.nota-error.error-activo {
+  display: block;
+}
+
+/* === Eliminar tooltips o mensajes emergentes por hover/clic === */
+.nota-button:hover::after,
+.nota-button:focus::after {
+  display: none !important;
+  content: none !important;
 }
