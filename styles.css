@@ -229,9 +229,9 @@ h2, h3 {
 /* === Medicina Interna entre semestres 5 y 6 del tercer año === */
 .med-interna-wrapper {
   position: absolute;
-  left: 50%;
+  left: calc(50% + 3mm); /* ← MOVIDO 3 mm A LA DERECHA */
   transform: translateX(-50%);
-  top: 60px; /* ajusta según altura de tus semestres */
+  top: 60px;
   z-index: 10;
 }
 
@@ -248,8 +248,7 @@ h2, h3 {
 
 /* === Internados más verticales, ajustados al contenedor === */
 .asignatura.internado {
-  width: 90px !important;
-  min-height: 130px;
+  width: 80px !important; /* ← MÁS PEQUEÑO QUE EL CONTENEDOR */
   font-size: 0.65em;
   white-space: normal;
   display: flex;
