@@ -224,12 +224,12 @@ h2, h3 {
   display: block;
 }
 
-/* === Medicina Interna centrada, más ancha y 3mm a la derecha === */
+/* === Medicina Interna centrada, más ancha y 6mm a la derecha === */
 .asignatura.med-interna {
   width: 230px !important;
   min-height: auto;
   margin: auto;
-  margin-left: 3mm; /* Desplazada 3mm a la derecha */
+  margin-left: 6mm; /* Desplazada 6mm a la derecha */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -265,7 +265,7 @@ h2, h3 {
   color: #ff66a3;
 }
 
-/* === Asignaturas de sexto y séptimo deben mantenerse pequeñas === */
+/* === Asignaturas de sexto y séptimo  === */
 .año.año6 .asignatura,
 .año.año7 .asignatura {
   width: 110px !important; /* mismo tamaño que el resto */
