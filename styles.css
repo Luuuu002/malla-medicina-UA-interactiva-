@@ -13,11 +13,19 @@ h1 {
   margin-bottom: 10px;
 }
 
-/* === Títulos de año centrados === */
-h2, h3 {
+/* === Títulos centrados === */
+h2 {
   color: #cc0052;
-  text-align: center; /* ahora centrado */
+  text-align: center;
   font-size: 1em;
+}
+
+h3 {
+  color: #cc0052;
+  font-size: 0.9em; /* más pequeño */
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 8px;
 }
 
 /* === Porcentaje de avance centrado === */
@@ -79,7 +87,7 @@ h2, h3 {
   background-color: #e05590;
 }
 
-/* === Contenedor general y grid de malla === */
+/* === Contenedor malla === */
 #malla-container {
   max-width: 1100px;
   margin: 0 auto;
@@ -93,43 +101,43 @@ h2, h3 {
   position: relative;
 }
 
-/* === Contenedores de semestre ajustados === */
 .semestre {
   background-color: #ffe5f0;
   border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  min-width: 120px;
-  max-width: 125px;
+  padding: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  min-width: 110px;
+  max-width: 115px;
   flex-shrink: 0;
 }
 
 /* === Semestres 6º y 7º año un poco más anchos === */
 .año[data-año="6"] .semestre,
 .año[data-año="7"] .semestre {
-  min-width: 122px;
-  max-width: 127px;
+  min-width: 112px;
+  max-width: 118px;
 }
 
-/* === Título de semestre más pequeño y compacto === */
-.semestre > h3 {
-  font-size: 0.9em;
-  white-space: nowrap;
-  margin: 0 0 8px 0;
+/* === Grid de asignaturas === */
+.grid-asignaturas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
 }
 
 /* === Asignaturas estándar === */
 .asignatura {
   background-color: #ffffff;
   border: 1px solid #ffcccc;
-  padding: 6px;
+  padding: 5px;
   border-radius: 8px;
   position: relative;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
   width: 100%;
-  max-width: 115px;
-  font-size: 0.63em; /* uniforme */
+  max-width: 105px;
+  font-size: 0.6em;
   text-align: center;
   white-space: normal;
   line-height: 1.2em;
@@ -140,7 +148,6 @@ h2, h3 {
   margin: 0;
   font-size: 1em;
   line-height: 1.2em;
-  word-break: break-word;
 }
 
 .asignatura small {
@@ -150,7 +157,7 @@ h2, h3 {
   margin-top: 2px;
 }
 
-/* === Estados de asignaturas === */
+/* === Estados === */
 .asignatura.completado {
   background-color: #ff66a3;
   opacity: 0.6;
@@ -172,64 +179,9 @@ h2, h3 {
   cursor: not-allowed;
 }
 
-/* === Input de notas === */
-.nota {
-  width: 100%;
-  padding: 6px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 0.9em;
-}
-
-.nota-mostrada {
-  font-size: 0.75em;
-  color: #4a002e;
-  margin-top: 4px;
-}
-
-/* === Botón para mostrar nota === */
-.nota-button {
-  position: absolute;
-  bottom: 6px;
-  right: 6px;
-  width: 16px;
-  height: 16px;
-  background-color: transparent;
-  cursor: pointer;
-  border-radius: 50%;
-}
-
-.nota-button:hover::after,
-.nota-button:focus::after {
-  display: none !important;
-  content: none !important;
-}
-
-/* === Sección de nota (oculta/visible) === */
-.nota-section {
-  display: none;
-}
-
-.asignatura.mostrar-nota .nota-section {
-  display: block;
-}
-
-/* === Mensajes de error de nota solo si es necesario === */
-.nota-error {
-  display: none;
-  color: red;
-  font-size: 0.7em;
-  margin-top: 4px;
-}
-
-.nota-error.error-activo {
-  display: block;
-}
-
-/* === Internados: más altos, angostos, multi-línea === */
+/* === Internados === */
 .asignatura.internado {
-  width: 95px !important;
+  width: 90px !important;
   min-height: 140px;
   font-size: 0.6em;
   word-break: break-word;
@@ -242,12 +194,12 @@ h2, h3 {
   line-height: 1.2em;
 }
 
-/* === Medicina Interna superpuesta entre semestres === */
+/* === Medicina Interna centrada entre semestres === */
 .med-interna-wrapper {
   position: absolute;
   left: 50.3%;
   transform: translateX(-50%);
-  top: 50px; /* ajusta según tu layout vertical */
+  top: 60px;
   z-index: 10;
 }
 
@@ -257,6 +209,53 @@ h2, h3 {
   text-align: center;
   white-space: normal;
   word-break: break-word;
+}
+
+/* === Input nota === */
+.nota {
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.nota-mostrada {
+  font-size: 0.75em;
+  color: #4a002e;
+  margin-top: 4px;
+}
+
+.nota-button {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 16px;
+  height: 16px;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.nota-section {
+  display: none;
+}
+
+.asignatura.mostrar-nota .nota-section {
+  display: block;
+}
+
+/* === Errores de nota solo si corresponde === */
+.nota-error {
+  display: none;
+  color: red;
+  font-size: 0.7em;
+  margin-top: 4px;
+}
+
+.nota-error.error-activo {
+  display: block;
 }
 
 /* === Footer === */
