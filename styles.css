@@ -85,7 +85,7 @@ h2, h3 {
 /* === Año académico === */
 .año {
   margin-bottom: 20px;
-  font-size: 0.94em; /* reducción general */
+  font-size: 0.94em;
 }
 
 .año > h2 {
@@ -105,10 +105,11 @@ h2, h3 {
   overflow-x: auto;
 }
 
+/* Para 6° y 7° se mantiene expansión horizontal */
 .año.año6 .grid-año,
 .año.año7 .grid-año {
   gap: 10px;
-  padding-right: 5mm; /* expansión de 5mm en semestres */
+  padding-right: 5mm;
 }
 
 /* === Semestre === */
@@ -117,9 +118,9 @@ h2, h3 {
   border-radius: 10px;
   padding: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  min-width: 125px; /* reducción general */
+  min-width: 125px;
   flex-shrink: 0;
-  max-width: 135px; /* reducción general */
+  max-width: 135px;
 }
 
 .semestre h3 {
@@ -137,7 +138,7 @@ h2, h3 {
   gap: 4px;
 }
 
-/* === Asignaturas === */
+/* === Asignaturas (1° a 5°) === */
 .asignatura {
   background-color: #ffffff;
   border: 1px solid #ffcccc;
@@ -146,7 +147,7 @@ h2, h3 {
   position: relative;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
-  width: 105px; /* reducción general */
+  width: 105px;
   font-size: 0.62em;
   text-align: center;
   white-space: normal;
@@ -233,8 +234,8 @@ h2, h3 {
 
 /* === Internados más verticales, menos anchos === */
 .asignatura.internado {
-  width: 95px !important; /* más angosto */
-  min-height: 170px;       /* más alto */
+  width: 95px !important;
+  min-height: 170px;
   font-size: 0.65em;
   white-space: normal;
   display: flex;
@@ -263,5 +264,5 @@ h2, h3 {
 /* === Asignaturas de sexto y séptimo === */
 .año.año6 .asignatura,
 .año.año7 .asignatura {
-  width: 100px !important; /* más angosto que el contenedor */
+  width: 100px !important;
 }
