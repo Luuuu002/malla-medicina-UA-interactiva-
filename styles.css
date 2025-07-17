@@ -93,7 +93,7 @@ h2, h3 {
   margin-bottom: 6px;
   color: #cc0052;
   font-weight: bold;
-  font-size: 0.9em;
+  font-size: 0.75em;
   text-align: left;
   padding-left: 6px;
 }
@@ -106,21 +106,27 @@ h2, h3 {
   overflow-x: auto;
 }
 
+/* Contenedores de 6º y 7º más anchos */
+.año.año6 .grid-año,
+.año.año7 .grid-año {
+  min-width: calc(100% + 5mm);
+}
+
 /* === Semestre === */
 .semestre {
   background-color: #ffe5f0;
   border-radius: 10px;
-  padding: 6px;
+  padding: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  min-width: 116px;
+  min-width: 113px;
+  max-width: 122px;
   flex-shrink: 0;
-  max-width: 125px;
 }
 
 .semestre h3 {
   margin-top: 0;
   color: #d60073;
-  font-size: 0.9em;
+  font-size: 0.75em;
   white-space: nowrap;
 }
 
@@ -132,7 +138,7 @@ h2, h3 {
   gap: 3px;
 }
 
-/* === Asignaturas === */
+/* === Asignaturas (general) === */
 .asignatura {
   background-color: #ffffff;
   border: 1px solid #ffcccc;
@@ -147,6 +153,14 @@ h2, h3 {
   white-space: normal;
   line-height: 1.1em;
   word-break: break-word;
+}
+
+/* Reducción de escala para asignaturas de 1º a 5º año (menos Medicina Interna) */
+.año:not(.año6):not(.año7) .asignatura:not(.med-interna) {
+  width: 93px;
+  height: 47px;
+  font-size: 0.55em;
+  padding: 4px;
 }
 
 .asignatura h4 {
@@ -239,11 +253,11 @@ h2, h3 {
   text-align: center;
 }
 
-/* === Internados más verticales, menos anchos === */
+/* === Internados más verticales, menos anchos, multilinea === */
 .asignatura.internado {
-  width: 96px !important;
-  min-height: 140px;
-  font-size: 0.6em;
+  width: 88px !important;
+  min-height: 150px;
+  font-size: 0.55em;
   white-space: normal;
   display: flex;
   flex-direction: column;
@@ -251,13 +265,14 @@ h2, h3 {
   align-items: center;
   text-align: center;
   word-break: break-word;
+  line-height: 1.2;
 }
 
 /* === Footer === */
 #footer {
   text-align: center;
   margin-top: 14px;
-  font-size: 0.8em;
+  font-size: 0.75em;
   color: #888;
 }
 
