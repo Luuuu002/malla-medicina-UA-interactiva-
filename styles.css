@@ -104,13 +104,15 @@ h2, h3 {
   flex-direction: row;
   gap: 4px;
   overflow-x: auto;
+  flex-wrap: nowrap;
 }
 
-/* Ajuste de ancho semestres de años 6 y 7: 2mm más ancho */
+/* Ajuste de ancho y altura para semestres de años 6 y 7 */
 .año.año6 .semestre,
 .año.año7 .semestre {
-  min-width: calc(102px + 2mm);
-  max-width: calc(111px + 2mm);
+  min-width: 92px;
+  max-width: 96px;
+  min-height: 300px;
 }
 
 /* === Semestre === */
@@ -119,9 +121,17 @@ h2, h3 {
   border-radius: 10px;
   padding: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  min-width: 102px; /* reducido 2mm para todos */
+  min-width: 102px;
   max-width: 111px;
   flex-shrink: 0;
+}
+
+/* Título del semestre con fuente más pequeña */
+.semestre > h3 {
+  font-size: 0.65em;
+  margin: 2px 0 4px;
+  text-align: center;
+  color: #cc0052;
 }
 
 /* === Grid de asignaturas === */
@@ -296,4 +306,13 @@ h2, h3 {
   margin: 0;
   font-size: 1.1em;
   color: #ff66a3;
+}
+
+/* === Promedio general al final === */
+#promedio-general {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.85em;
+  font-weight: bold;
+  color: #cc0052;
 }
