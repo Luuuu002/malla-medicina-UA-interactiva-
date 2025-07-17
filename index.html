@@ -28,9 +28,42 @@
   <!-- Contenedor de la malla -->
   <div id="malla-container"></div>
 
-  <!-- Scripts -->
+  <!-- Promedio general (se actualiza con JS) -->
+  <div id="promedio-general">
+    Promedio general: <span>—</span>
+  </div>
+
+  <!-- Script principal -->
   <script src="script.js"></script>
+
+  <!-- Script para calcular promedio general -->
+  <script>
+    function calcularPromedioGeneral() {
+      const asignaturasCompletadas = document.querySelectorAll('.asignatura.completado .nota-mostrada');
+      let notas = [];
+
+      asignaturasCompletadas.forEach(notaSpan => {
+        const nota = parseFloat(notaSpan.textContent);
+        if (!isNaN(nota)) {
+          notas.push(nota);
+        }
+      });
+
+      const promedio = notas.length > 0 ? (notas.reduce((a, b) => a + b, 0) / notas.length).toFixed(2) : '—';
+      const contenedor = document.querySelector('#promedio-general span');
+      if (contenedor) contenedor.textContent = promedio;
+    }
+
+    // Ejecutar al cargar
+    document.addEventListener('DOMContentLoaded', calcularPromedioGeneral);
+
+    // Ejecutar cada vez que se modifica una nota
+    document.addEventListener('input', function (e) {
+      if (e.target.classList.contains('nota')) {
+        setTimeout(calcularPromedioGeneral, 200);
+      }
+    });
+  </script>
 
 </body>
 </html>
-
