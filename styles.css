@@ -85,6 +85,7 @@ h2, h3 {
 /* === Año académico === */
 .año {
   margin-bottom: 20px;
+  font-size: 0.94em; /* reducción general */
 }
 
 .año > h2 {
@@ -93,7 +94,7 @@ h2, h3 {
   font-weight: bold;
   font-size: 1em;
   text-align: left;
-  padding-left: 4mm; /* centrado un poco más */
+  padding-left: 8px;
 }
 
 /* === Grid horizontal de semestres por año === */
@@ -104,21 +105,27 @@ h2, h3 {
   overflow-x: auto;
 }
 
+.año.año6 .grid-año,
+.año.año7 .grid-año {
+  gap: 10px;
+  padding-right: 5mm; /* expansión de 5mm en semestres */
+}
+
 /* === Semestre === */
 .semestre {
   background-color: #ffe5f0;
   border-radius: 10px;
   padding: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  min-width: 130px;
+  min-width: 125px; /* reducción general */
   flex-shrink: 0;
-  max-width: 140px;
+  max-width: 135px; /* reducción general */
 }
 
 .semestre h3 {
   margin-top: 0;
   color: #d60073;
-  font-size: 1em;
+  font-size: 0.95em;
   white-space: nowrap;
 }
 
@@ -127,20 +134,20 @@ h2, h3 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
 }
 
 /* === Asignaturas === */
 .asignatura {
   background-color: #ffffff;
   border: 1px solid #ffcccc;
-  padding: 5px;
+  padding: 6px;
   border-radius: 8px;
   position: relative;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
-  width: 110px;
-  font-size: 0.65em;
+  width: 105px; /* reducción general */
+  font-size: 0.62em;
   text-align: center;
   white-space: normal;
   line-height: 1.2em;
@@ -224,23 +231,10 @@ h2, h3 {
   display: block;
 }
 
-/* === Medicina Interna centrada, más ancha y 9mm a la derecha === */
-.asignatura.med-interna {
-  width: 230px !important;
-  min-height: auto;
-  margin: auto;
-  margin-left: 9mm; /* Desplazada 9mm a la derecha */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
 /* === Internados más verticales, menos anchos === */
 .asignatura.internado {
-  width: 110px !important;
-  min-height: 150px;
+  width: 95px !important; /* más angosto */
+  min-height: 170px;       /* más alto */
   font-size: 0.65em;
   white-space: normal;
   display: flex;
@@ -249,6 +243,7 @@ h2, h3 {
   align-items: center;
   text-align: center;
   word-break: break-word;
+  line-height: 1.3em;
 }
 
 /* === Footer === */
@@ -266,17 +261,7 @@ h2, h3 {
 }
 
 /* === Asignaturas de sexto y séptimo === */
-.año.año6 .grid-año,
-.año.año7 .grid-año {
-  max-width: 110px;
-}
-
 .año.año6 .asignatura,
 .año.año7 .asignatura {
-  width: 110px !important;
-}
-
-/* === Eliminar Medicina Interna fuera del contenedor === */
-body > .asignatura.med-interna:not(:within(#malla-container)) {
-  display: none !important;
+  width: 100px !important; /* más angosto que el contenedor */
 }
