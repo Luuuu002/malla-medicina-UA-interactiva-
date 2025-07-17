@@ -106,10 +106,11 @@ h2, h3 {
   overflow-x: auto;
 }
 
-/* Sin ampliación especial en año 6 y 7 */
-.año.año6 .grid-año,
-.año.año7 .grid-año {
-  min-width: auto;
+/* Ajuste de ancho semestres de años 6 y 7: 2mm más ancho */
+.año.año6 .semestre,
+.año.año7 .semestre {
+  min-width: calc(102px + 2mm);
+  max-width: calc(111px + 2mm);
 }
 
 /* === Semestre === */
@@ -118,22 +119,9 @@ h2, h3 {
   border-radius: 10px;
   padding: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  min-width: 108px;
-  max-width: 117px;
-  flex-shrink: 0;
-}
-
-/* Reducir semestres de todos los años en 2mm */
-.año .semestre {
-  min-width: 102px;
+  min-width: 102px; /* reducido 2mm para todos */
   max-width: 111px;
-}
-
-.semestre h3 {
-  margin-top: 0;
-  color: #d60073;
-  font-size: 0.75em;
-  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* === Grid de asignaturas === */
