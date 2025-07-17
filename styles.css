@@ -262,7 +262,7 @@ h2, h3 {
   width: 210px !important;
   min-height: auto;
   margin: auto;
-  margin-left: 3mm;
+  margin-left: 1mm;
   display: flex;
   flex-direction: column;
   justify-content: center;
