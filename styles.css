@@ -8,128 +8,260 @@ body {
 }
 
 h1 {
-  font-size: 2.5em;
   text-align: center;
+  color: #ff66a3;
   margin-bottom: 10px;
 }
 
-h2 {
-  font-size: 1.2em;
+h2, h3 {
+  color: #cc0052;
+}
+
+/* === Porcentaje de avance centrado === */
+#avance {
   text-align: center;
-  margin-top: 0;
   margin-bottom: 30px;
 }
 
-.container {
+#avance h2 {
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  gap: 20px;
   justify-content: center;
-}
-
-.year-column {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  min-width: 210px; /* reducción general */
-  font-size: 0.83em; /* reducción general de escala */
-}
-
-.year-column.año-6,
-.year-column.año-7 {
-  min-width: 240px; /* +5mm horizontalmente */
-}
-
-.semester {
-  background-color: #ffd6eb;
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.semester-title {
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 5px;
-  font-size: 0.9em;
-}
-
-.course {
-  background-color: #ffb6d9;
-  margin: 6px 0;
-  padding: 8px;
-  border-radius: 6px;
-  font-size: 0.9em;
-  line-height: 1.3;
-  word-wrap: break-word;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-/* Colores por tipo de formación */
-.formacion-basica {
-  background-color: #ffe0f0;
-}
-
-.formacion-general {
-  background-color: #fdd0e5;
-}
-
-.formacion-profesional {
-  background-color: #fbb3d1;
-}
-
-/* Internado */
-.internado {
-  background-color: #fbb3d1;
-  border-radius: 8px;
-  margin-top: 10px;
-  padding: 12px 10px;
-  font-size: 0.95em;
-  min-height: 60px;
-  width: 80%;
-  max-width: 180px;
-  text-align: center;
-  line-height: 1.4;
-  word-break: break-word;
-  display: flex;
   align-items: center;
-  justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
+  gap: 8px;
+  color: #cc0052;
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 10px;
 }
 
-/* Barra de progreso */
-.progress-bar {
+#porcentaje {
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
+/* === Barra de progreso === */
+.barra {
+  width: 80%;
+  margin: 0 auto;
   height: 20px;
-  background-color: #ff99cc;
+  background-color: #ffb3d9;
   border-radius: 10px;
   overflow: hidden;
-  margin: 20px auto;
-  width: 80%;
 }
 
-.progress-bar-fill {
+.progreso {
   height: 100%;
-  background-color: #cc0066;
+  background-color: #ff66a3;
   width: 0%;
-  transition: width 0.5s ease-in-out;
+  transition: width 0.4s ease-in-out;
 }
 
-/* Botón de resetear */
-.reset-button {
-  display: block;
-  margin: 20px auto;
-  padding: 10px 20px;
-  background-color: #ff99cc;
+/* === Botón Reset === */
+#reset-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #ff66a3;
+  color: white;
   border: none;
-  border-radius: 5px;
-  color: #4a002e;
+  padding: 8px 16px;
   font-size: 1em;
   cursor: pointer;
+  border-radius: 5px;
+  z-index: 999;
 }
 
-.reset-button:hover {
-  background-color: #ff66b2;
+#reset-btn:hover {
+  background-color: #e05590;
+}
+
+/* === Contenedor de malla === */
+#malla-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* === Año académico === */
+.año {
+  margin-bottom: 20px;
+  font-size: 0.94em; /* reducción general */
+}
+
+.año > h2 {
+  margin-bottom: 10px;
+  color: #cc0052;
+  font-weight: bold;
+  font-size: 1em;
+  text-align: left;
+  padding-left: 8px;
+}
+
+/* === Grid horizontal de semestres por año === */
+.grid-año {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  overflow-x: auto;
+}
+
+.año.año6 .grid-año,
+.año.año7 .grid-año {
+  gap: 10px;
+  padding-right: 5mm; /* expansión de 5mm en semestres */
+}
+
+/* === Semestre === */
+.semestre {
+  background-color: #ffe5f0;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  min-width: 125px; /* reducción general */
+  flex-shrink: 0;
+  max-width: 135px; /* reducción general */
+}
+
+.semestre h3 {
+  margin-top: 0;
+  color: #d60073;
+  font-size: 0.95em;
+  white-space: nowrap;
+}
+
+/* === Grid de asignaturas === */
+.grid-asignaturas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+/* === Asignaturas === */
+.asignatura {
+  background-color: #ffffff;
+  border: 1px solid #ffcccc;
+  padding: 6px;
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  width: 105px; /* reducción general */
+  font-size: 0.62em;
+  text-align: center;
+  white-space: normal;
+  line-height: 1.2em;
+  word-break: break-word;
+}
+
+.asignatura h4 {
+  margin: 0;
+  font-size: 1em;
+  white-space: normal;
+  line-height: 1.2em;
+  word-break: break-word;
+}
+
+.asignatura small {
+  display: block;
+  font-size: 0.75em;
+  color: #888;
+  margin-top: 2px;
+}
+
+/* === Estados === */
+.asignatura.completado {
+  background-color: #ff66a3;
+  text-decoration: none;
+  opacity: 0.6;
+  cursor: default;
+}
+
+.asignatura.completado h4 {
+  text-decoration: line-through;
+  background-color: transparent;
+}
+
+.asignatura.cursando {
+  background-color: #ffb3d9;
+}
+
+.asignatura.bloqueado {
+  background-color: #fafafa;
+  border-color: #ddd;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* === Input nota === */
+.nota {
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* === Nota mostrada === */
+.nota-mostrada {
+  font-size: 0.75em;
+  color: #4a002e;
+  margin-top: 4px;
+}
+
+/* === Botón invisible de nota === */
+.nota-button {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 16px;
+  height: 16px;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+/* === Mostrar/ocultar sección nota === */
+.nota-section {
+  display: none;
+}
+
+.asignatura.mostrar-nota .nota-section {
+  display: block;
+}
+
+/* === Internados más verticales, menos anchos === */
+.asignatura.internado {
+  width: 95px !important; /* más angosto */
+  min-height: 170px;       /* más alto */
+  font-size: 0.65em;
+  white-space: normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  word-break: break-word;
+  line-height: 1.3em;
+}
+
+/* === Footer === */
+#footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9em;
+  color: #888;
+}
+
+#footer h3 {
+  margin: 0;
+  font-size: 1.2em;
+  color: #ff66a3;
+}
+
+/* === Asignaturas de sexto y séptimo === */
+.año.año6 .asignatura,
+.año.año7 .asignatura {
+  width: 100px !important; /* más angosto que el contenedor */
 }
