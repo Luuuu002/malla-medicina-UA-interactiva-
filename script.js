@@ -1,5 +1,3 @@
-// === Manejador de la malla académica ===
-
 let asignaturas = [];
 let estados = {};
 
@@ -58,7 +56,7 @@ function renderMalla() {
 
   añosOrdenados.forEach(año => {
     const divAño = document.createElement("div");
-    divAño.className = "año";
+    divAño.className = `año año${año}`;
 
     const h2 = document.createElement("h2");
     h2.textContent = `AÑO ${año}`;
@@ -119,7 +117,6 @@ function renderMalla() {
             const esquinaAlto = rect.height * 0.25;
 
             if (clickX > rect.width - esquinaAncho && clickY > rect.height - esquinaAlto) {
-              // Mostrar/ocultar nota
               div.classList.toggle("mostrar-nota");
               return;
             }
@@ -165,6 +162,15 @@ function renderMalla() {
   });
 
   container.appendChild(divAñosContenedor);
+
+  // Agregar contenedor del promedio si no existe
+  if (!document.getElementById("promedio-general")) {
+    const promedioDiv = document.createElement("div");
+    promedioDiv.id = "promedio-general";
+    promedioDiv.textContent = "Promedio general: 0.0";
+    container.appendChild(promedioDiv);
+  }
+
   actualizarAvance();
 }
 
@@ -183,6 +189,19 @@ function actualizarAvance() {
 
   document.querySelector(".progreso").style.width = `${porcentaje}%`;
   document.getElementById("porcentaje").innerText = `${porcentaje}%`;
+
+  // Calcular promedio general
+  const notasValidas = asignaturas
+    .filter(a => estados[a.id]?.completado)
+    .map(a => parseFloat(estados[a.id]?.nota))
+    .filter(n => !isNaN(n) && n >= 1 && n <= 7);
+
+  const promedio = notasValidas.length
+    ? (notasValidas.reduce((sum, n) => sum + n, 0) / notasValidas.length).toFixed(2)
+    : "0.0";
+
+  const promedioDiv = document.getElementById("promedio-general");
+  if (promedioDiv) promedioDiv.textContent = `Promedio general: ${promedio}`;
 }
 
 function resetearMalla() {
