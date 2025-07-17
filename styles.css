@@ -94,8 +94,8 @@ h2, h3 {
   color: #cc0052;
   font-weight: bold;
   font-size: 0.75em;
-  text-align: left;
-  padding-left: 6px;
+  text-align: center; /* CAMBIO 2: centrado */
+  padding-left: 0;    /* CAMBIO 2: eliminado desplazamiento izquierdo */
 }
 
 /* === Grid horizontal de semestres por año === */
@@ -128,7 +128,7 @@ h2, h3 {
 
 /* Título del semestre con fuente más pequeña */
 .semestre > h3 {
-  font-size: 0.65em;
+  font-size: 0.58em; /* CAMBIO 1: reducido desde 0.65em */
   margin: 2px 0 4px;
   text-align: center;
   color: #cc0052;
@@ -157,13 +157,13 @@ h2, h3 {
   line-height: 1.1em;
   word-break: break-word;
   width: 88px;
-  height: 45px;
+  height: 49px; /* CAMBIO 4: altura aumentada desde 45px */
 }
 
 /* Reducción para asignaturas de 1º a 5º año */
 .año:not(.año6):not(.año7) .asignatura:not(.med-interna) {
   width: 88px;
-  height: 45px;
+  height: 49px; /* CAMBIO 4: altura aumentada desde 45px */
   font-size: 0.54em;
   padding: 4px;
 }
@@ -182,6 +182,7 @@ h2, h3 {
   justify-content: center;
   align-items: center;
   text-align: center;
+  margin-left: -2mm; /* CAMBIO 3: desplazado 2mm a la izquierda */
 }
 
 /* Título de asignatura */
