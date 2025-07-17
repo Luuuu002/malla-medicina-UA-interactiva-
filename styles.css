@@ -181,6 +181,7 @@ h2, h3 {
   justify-content: center;
   align-items: center;
   text-align: center;
+  margin-left: -0.5mm
 }
 
 /* Título de asignatura */
