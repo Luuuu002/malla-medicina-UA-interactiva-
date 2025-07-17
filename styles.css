@@ -118,9 +118,15 @@ h2, h3 {
   border-radius: 10px;
   padding: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  min-width: 113px;
-  max-width: 122px;
+  min-width: 110px;
+  max-width: 119px;
   flex-shrink: 0;
+}
+
+/* Reducir semestres de 1º a 5º año en 3mm */
+.año:not(.año6):not(.año7) .semestre {
+  min-width: 104px;
+  max-width: 113px;
 }
 
 .semestre h3 {
@@ -147,7 +153,6 @@ h2, h3 {
   position: relative;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
-  width: 93px;
   font-size: 0.6em;
   text-align: center;
   white-space: normal;
@@ -155,12 +160,24 @@ h2, h3 {
   word-break: break-word;
 }
 
-/* Reducción de escala para asignaturas de 1º a 5º año (menos Medicina Interna) */
+/* Reducción para asignaturas de 1º a 5º año */
 .año:not(.año6):not(.año7) .asignatura:not(.med-interna) {
-  width: 93px;
+  width: 90px;
   height: 47px;
   font-size: 0.55em;
   padding: 4px;
+}
+
+/* Ajuste para asignaturas de 6º y 7º año: más altas y angostas */
+.año.año6 .asignatura,
+.año.año7 .asignatura {
+  width: 88px !important;
+  min-height: 58px;
+  font-size: 0.55em;
+  padding: 4px;
+  white-space: normal;
+  line-height: 1.2;
+  word-break: break-word;
 }
 
 .asignatura h4 {
@@ -280,10 +297,4 @@ h2, h3 {
   margin: 0;
   font-size: 1.1em;
   color: #ff66a3;
-}
-
-/* === Asignaturas de sexto y séptimo === */
-.año.año6 .asignatura,
-.año.año7 .asignatura {
-  width: 96px !important;
 }
