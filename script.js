@@ -211,3 +211,45 @@ function resetearMalla() {
     renderMalla();
   }
 }
+function cambiarEstado(asignaturaId) {
+  const asignatura = document.getElementById(asignaturaId);
+
+  if (asignatura.classList.contains("completado")) {
+    asignatura.classList.remove("completado");
+    asignatura.classList.add("cursando");
+  } else if (asignatura.classList.contains("cursando")) {
+    asignatura.classList.remove("cursando");
+    asignatura.classList.add("bloqueado");
+  } else if (asignatura.classList.contains("bloqueado")) {
+    asignatura.classList.remove("bloqueado");
+  } else {
+    asignatura.classList.add("completado");
+  }
+
+  guardarProgreso();
+} 
+function guardarProgreso() {
+  const asignaturas = document.querySelectorAll(".asignatura");
+  const progreso = {};
+
+  asignaturas.forEach(asignatura => {
+    progreso[asignatura.id] = asignatura.className;
+  });
+
+  localStorage.setItem("progresoMalla", JSON.stringify(progreso));
+}
+
+function cargarProgreso() {
+  const progreso = JSON.parse(localStorage.getItem("progresoMalla"));
+  if (progreso) {
+    Object.keys(progreso).forEach(id => {
+      const asignatura = document.getElementById(id);
+      if (asignatura) {
+        asignatura.className = progreso[id];
+      }
+    });
+  }
+}
+
+// Llamar al cargar la página
+document.addEventListener("DOMContentLoaded", cargarProgreso);
