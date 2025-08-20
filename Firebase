@@ -1,0 +1,6 @@
+usuarios
+  └── [userUID]
+        └── estadoMalla
+              ├── 1: {completado: true, nota: "6.5"}
+              ├── 2: {completado: false, nota: ""}
+              └── ...
