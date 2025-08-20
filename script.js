@@ -253,3 +253,39 @@ function cargarProgreso() {
 
 // Llamar al cargar la página
 document.addEventListener("DOMContentLoaded", cargarProgreso);
+
+// Inicializa Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// Autenticación anónima (o puedes usar email si quieres usuarios más personalizados)
+firebase.auth().signInAnonymously();
+
+function guardarEstadoEnNube() {
+
+  function cargarEstadoDesdeNube(callback) {
+  const user = firebase.auth().currentUser;
+  if (user) {
+    db.ref('usuarios/' + user.uid + '/estadoMalla').once('value')
+      .then(snapshot => {
+        if (snapshot.exists()) {
+          estados = snapshot.val();
+          if (callback) callback();
+        }
+      });
+  }
+}
+  const user = firebase.auth().currentUser;
+  if (user) {
+    db.ref('usuarios/' + user.uid + '/estadoMalla').set(estados)
+      .then(() => {
+        alert("Progreso guardado en la nube 🚀");
+      });
+  }
+}
+
+function guardarEstado() {
+  localStorage.setItem("estadoMalla", JSON.stringify(estados));
+  guardarEstadoEnNube();
+  actualizarAvance();
+}
